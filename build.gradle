@@ -21,9 +21,14 @@ buildscript {
         // logger
         timberVersion = "5.0.1"
 
-
         // android components
         nav_version = "2.3.5"
+
+        // shimmer version
+        shimmerVersion = "0.5.0"
+
+        // glide version
+        glideVersion = "4.12.0"
     }
 
     repositories {

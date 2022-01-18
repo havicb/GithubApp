@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 val homeModule = module {
     single { HomeViewModel(get()) } bind HomeLogic::class
+    single { HomeRepositoriesAdapter(get()) }
 }
