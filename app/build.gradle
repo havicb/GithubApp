@@ -1,0 +1,67 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.githubapp"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'API_BASE_URL', '"https://api.github.com/"'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$appCompat"
+    implementation "com.google.android.material:material:$androidMaterial"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    androidTestImplementation "androidx.test.ext:junit:$jUnit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$testEspresso"
+
+    // data
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$gsonVersion"
+
+    // di
+    implementation "io.insert-koin:koin-android:$koinVersion"
+    implementation "io.insert-koin:koin-android-compat:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
+
+
+    // logger
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // android components
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    Used to declare colors to use in application.
+    First define color here, then set it inside themes.xml
+    -->
+
+    <attr name="primaryAppBarBackgroundColor" format="color"/>
+    <attr name="primaryTextColor" format="color"/>
+    <attr name="primaryButtonBackgroundColor" format="color"/>
+
+</resources>
