@@ -36,7 +36,8 @@ fun RepositoryDto.toRepositoryEntity() =
         url,
         visibility,
         watchers,
-        watchers_count
+        watchers_count,
+        open_issues_count
     )
 
 /**

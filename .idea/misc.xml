@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/background_shimmer.xml" value="0.25833333333333336" />
+        <entry key="app/src/main/res/drawable/filter_list_icon.xml" value="0.13802083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14447463768115942" />
         <entry key="app/src/main/res/layout/app_bar.xml" value="0.121875" />
         <entry key="app/src/main/res/layout/appbar.xml" value="0.14447463768115942" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.14447463768115942" />
         <entry key="app/src/main/res/layout/item_repository.xml" value="0.14447463768115942" />
+        <entry key="app/src/main/res/layout/item_repository_shimmer.xml" value="0.11778115501519756" />
       </map>
     </option>
   </component>

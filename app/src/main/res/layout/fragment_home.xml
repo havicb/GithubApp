@@ -10,15 +10,89 @@
         android:id="@+id/toolbar"
         layout="@layout/app_bar"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_repositories"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editText_searchRepositories"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:padding="4dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        android:drawableStart="@drawable/search_icon"
+        android:drawablePadding="8dp"
+        android:drawableEnd="@drawable/filter_list_icon"
+        android:ems="10"
+        android:maxLines="1"
+        android:imeOptions="actionDone"
+        android:hint="Find some repositories" />
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/editText_searchRepositories"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_repository" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Shimmer">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical">
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+               <include
+                   layout="@layout/item_repository_shimmer"/>
+
+
+           </LinearLayout>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_repositories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_repository" />
+
+    </ViewFlipper>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,11 +10,12 @@ import com.example.githubapp.databinding.ItemRepositoryBinding
 import com.example.githubapp.domain.entity.RepositoryEntity
 
 class HomeRepositoriesAdapter(
-    private val context: Context
+    private val context: Context,
 ) : RecyclerView.Adapter<HomeRepositoriesAdapter.RepositoriesVH>() {
 
     // todo: Change this to view class
     private var mList: List<RepositoryEntity> = emptyList()
+    private var mOnRepositoryClickListener: ((RepositoryEntity) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesVH =
         RepositoriesVH(
@@ -37,18 +38,28 @@ class HomeRepositoriesAdapter(
         notifyDataSetChanged()
     }
 
+    fun setOnItemClickListener(listener: (RepositoryEntity) -> Unit) {
+        this.mOnRepositoryClickListener = listener
+    }
+
     inner class RepositoriesVH(
         private val binding: ItemRepositoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(repositoryEntity: RepositoryEntity) {
             with(binding) {
-                textViewId.text = repositoryEntity.id.toString()
                 textViewFullName.text = repositoryEntity.fullName
+                textViewForks.text = repositoryEntity.forksCount.toString()
+                textViewWatchers.text = repositoryEntity.watchersCount.toString()
+                textViewIssues.text = repositoryEntity.openIssues.toString()
                 Glide.with(context)
                     .load(repositoryEntity.owner.avatarUrl)
                     .circleCrop()
-                    .into(imageViewAvatarUrl);
+                    .into(imageViewAvatarUrl)
+
+                cardView.setOnClickListener {
+                    mOnRepositoryClickListener?.invoke(repositoryEntity)
+                }
             }
         }
     }

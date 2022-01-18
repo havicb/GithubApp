@@ -26,4 +26,13 @@
         <item name="contentInsetStartWithNavigation">0dp</item>
     </style>
 
+    <style name="Shimmer">
+        <item name="shimmer_auto_start">true</item>
+        <item name="shimmer_colored">true</item>
+        <item name="shimmer_base_alpha">1</item>
+        <item name="shimmer_highlight_alpha">1</item>
+        <item name="shimmer_base_color">@color/mercury</item>
+        <item name="shimmer_highlight_color">@color/gallery</item>
+    </style>
+
 </resources>
