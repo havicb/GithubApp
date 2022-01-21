@@ -2,9 +2,9 @@ package com.example.githubapp.presentation.main.utils
 
 import android.content.Context
 import android.util.TypedValue
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.ViewFlipper
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Converts Integer of Pixels to Integer of DP.
@@ -25,3 +25,20 @@ fun Number.toDp(context: Context): Int {
  */
 fun ViewFlipper.showViewByIndex(index: Int) =
     run { displayedChild = indexOfChild(getChildAt(index)) }
+
+/**
+ * Used to set action on [imeOptions = SEARCH]
+ *
+ * @param block
+ */
+fun EditText.onActionSearch(block: () -> Boolean) {
+    setOnEditorActionListener { _, actionId, _ ->
+
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            block()
+            clearFocus()
+        }
+
+        false
+    }
+}

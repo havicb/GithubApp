@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.home.HomeFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <ImageView
         android:id="@+id/imageView_searchIcon"
         android:layout_width="wrap_content"
@@ -13,8 +22,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:src="@drawable/search_icon"
+        android:foreground="?selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editText_searchRepositories"
@@ -24,11 +34,12 @@
         android:ems="10"
         android:hint="@string/homeScreen_searchHint"
         android:imeOptions="actionSearch"
+        android:singleLine="true"
         android:maxLines="1"
         android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@id/imageView_filterIcon"
         app:layout_constraintStart_toEndOf="@id/imageView_searchIcon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <ImageView
         android:id="@+id/imageView_filterIcon"
@@ -36,9 +47,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
+        android:foreground="?selectableItemBackground"
         android:src="@drawable/filter_list_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"  />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/viewFlipper"
+        android:layout_marginBottom="4dp"/>
 
     <ViewFlipper
         android:id="@+id/viewFlipper"

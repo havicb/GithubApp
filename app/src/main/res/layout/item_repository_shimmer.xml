@@ -34,12 +34,45 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/background_shimmer"
         app:layout_constraintBottom_toBottomOf="@+id/cardView1"
-        app:layout_constraintEnd_toStartOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardView1"
         app:layout_constraintTop_toTopOf="@+id/cardView1" />
 
     <View
         android:id="@+id/view2"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginVertical="12dp" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@id/view2"
+        app:layout_constraintTop_toBottomOf="@id/cardView1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginVertical="12dp"/>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:background="@color/grey"
+        app:layout_constraintStart_toEndOf="@id/view3"
+        app:layout_constraintTop_toBottomOf="@id/cardView1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginVertical="12dp"/>
+
+    <View
+        android:id="@+id/view5"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/grey"
@@ -47,23 +80,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView2"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:backgroundTint="@color/mercury"
-        app:cardCornerRadius="32dp"
-        android:layout_marginEnd="24dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view1">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:src="@drawable/background_shimmer"
-            android:tint="@null" />
-    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

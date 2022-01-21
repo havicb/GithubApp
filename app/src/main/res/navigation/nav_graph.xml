@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_userDetailsFragment"
             app:destination="@id/userDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_errorFragment"
+            app:destination="@id/errorFragment" />
     </fragment>
     <fragment
         android:id="@+id/repositoryDetailsFragment"
@@ -31,4 +34,9 @@
         android:name="com.example.githubapp.presentation.main.user.UserDetailsFragment"
         android:label="fragment_user_details"
         tools:layout="@layout/fragment_user_details" />
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="com.example.githubapp.ErrorFragment"
+        android:label="fragment_error"
+        tools:layout="@layout/fragment_error" />
 </navigation>

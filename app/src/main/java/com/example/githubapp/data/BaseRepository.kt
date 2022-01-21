@@ -26,14 +26,14 @@ abstract class BaseRepository(private val networkHandler: NetworkHandler) {
     private fun handleFailedResponse(
         code: Int,
         message: String
-    ): Either.Left<Failure.NetworkFailure> {
+    ): Either.Left<Failure> {
         return when (code) {
             HttpURLConnection.HTTP_INTERNAL_ERROR -> Either.Left(Failure.ServerFailure(message))
             HttpURLConnection.HTTP_BAD_REQUEST -> Either.Left(Failure.BadRequest(message))
             HttpURLConnection.HTTP_NOT_FOUND -> Either.Left(Failure.NotFound(message))
             HttpURLConnection.HTTP_FORBIDDEN -> Either.Left(Failure.Forbidden(message))
             HttpURLConnection.HTTP_UNAUTHORIZED -> Either.Left(Failure.NotAuthorized(message))
-            else -> throw UnknownError()
+            else -> Either.Left(Failure.OtherFailure("Some message"))
         }
     }
 }

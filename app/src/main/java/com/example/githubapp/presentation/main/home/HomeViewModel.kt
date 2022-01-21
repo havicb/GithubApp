@@ -24,26 +24,27 @@ class HomeViewModel(
     private val mIsLoading = MutableLiveData<Boolean>()
 
     private val _mRepositories = arrayListOf<RepositoryEntity>()
-    private var mSearchTerm = ""
+    private var mSearchTerm = "a"
+    private var mCurrentSortType: RepositorySortType? = null
 
     override fun observeIsLoading(): LiveData<Boolean> = mIsLoading
     override fun observeShouldShowFilterDialog(): LiveData<Unit> = mShouldShowFilterDialog
     override fun observeRepositories(): LiveData<List<RepositoryView>> = mRepositories
 
     init {
-        fetchRepositories("a", RepositorySortType.STARS)
+        fetchRepositories(mSearchTerm, mCurrentSortType)
     }
 
     override fun onSortByStarsSelected() {
-        fetchRepositories("a", RepositorySortType.STARS)
+        fetchRepositories(mSearchTerm, RepositorySortType.STARS)
     }
 
     override fun onSortByForksSelected() {
-        fetchRepositories("a", RepositorySortType.FORKS)
+        fetchRepositories(mSearchTerm, RepositorySortType.FORKS)
     }
 
     override fun onSortByUpdatedSelected() {
-        fetchRepositories("a", RepositorySortType.UPDATED)
+        fetchRepositories(mSearchTerm, RepositorySortType.UPDATED)
     }
 
     override fun onFilterIconClick() {
@@ -51,16 +52,19 @@ class HomeViewModel(
     }
 
     override fun onSearchIconClick() {
-        // TODO: Handle search
+        fetchRepositories(mSearchTerm, null)
     }
 
     override fun onSearchRepositoriesTextChange(text: String) {
-        mSearchTerm = text
+        mSearchTerm = text.trim()
     }
 
+    /**
+     * In order to avoid repeating same code, logic for fetching repository is extracted here.
+     */
     private fun fetchRepositories(
         searchTerm: String,
-        repositorySortType: RepositorySortType
+        repositorySortType: RepositorySortType?
     ) {
         viewModelScope.launch {
             mIsLoading.value = true
@@ -72,10 +76,16 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * In real life scenario this method would be much more complex.
+     */
     private fun handleFailure(failure: Failure) {
-        // todo: Handle failure
+        navigate(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
     }
 
+    /**
+     * Method for handling successful response.
+     */
     private fun handleRepositories(repositories: Repositories) {
         _mRepositories.apply {
             clear()

@@ -65,7 +65,7 @@ data class RepositoryDto(
     val owner: Owner,
     val `private`: Boolean,
     val pulls_url: String,
-    val pushed_at: String,
+    val pushed_at: String?,
     val releases_url: String,
     val score: Double,
     val size: Int,

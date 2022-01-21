@@ -25,5 +25,6 @@ class GetRepositoriesUseCase(
 
 data class Params(
     val searchTerm: String,
-    val repositoryType: RepositorySortType
+    val repositoryType: RepositorySortType?
 )
+

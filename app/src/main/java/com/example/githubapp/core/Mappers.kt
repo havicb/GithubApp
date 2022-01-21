@@ -30,7 +30,7 @@ fun RepositoryDto.toRepositoryEntity() =
         id,
         name,
         owner.toOwnerEntity(),
-        pushed_at,
+        pushed_at ?: "",
         releases_url,
         score,
         size,

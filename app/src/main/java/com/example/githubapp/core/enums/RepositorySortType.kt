@@ -8,7 +8,9 @@ enum class RepositorySortType(
     FORKS("Forks");
 
     companion object {
-        fun urlName(type: RepositorySortType): String {
+        fun urlName(type: RepositorySortType?): String {
+            if(type == null)
+                return ""
             return when (type) {
                 UPDATED -> "updated"
                 STARS -> "stars"

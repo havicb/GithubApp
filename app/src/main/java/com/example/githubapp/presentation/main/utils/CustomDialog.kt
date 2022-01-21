@@ -2,26 +2,21 @@ package com.example.githubapp.presentation.main.utils
 
 import android.app.AlertDialog
 import android.content.Context
-import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
 
-class CustomDialog<T : ViewBinding>(
+class CustomDialog<T>(
     context: Context,
-    layoutInflator: (LayoutInflater) -> T
+    binding: ViewBinding
 ) : AlertDialog(context) {
 
     private var _binding: ViewBinding? = null
-    var mDialog: Builder
+    private var mDialog: Builder = Builder(context)
+    val dialogBinding get(): T = _binding!! as T
 
     init {
-        mDialog = Builder(context)
-        _binding = layoutInflator.invoke(LayoutInflater.from(context))
+        _binding = binding
         setContentView(binding.root)
     }
-
-    @Suppress("UNCHECKED_CAST")
-    internal val binding
-        get() = _binding as T
 
     fun showDialog() {
         mDialog.show()

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.githubapp.core.extensions.navController
@@ -30,6 +31,11 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
+    }
+
     override fun onStart() {
         super.onStart()
         viewLogic.observeNavigationEvent().observe(viewLifecycleOwner) {
@@ -44,4 +50,13 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    protected fun hideKeyboard() {
+        (requireActivity() as MainActivity).hideKeyboard()
+    }
+
+    /**
+     * Initialize all available listeners on particular screen.
+     */
+    open fun setListeners() {}
 }

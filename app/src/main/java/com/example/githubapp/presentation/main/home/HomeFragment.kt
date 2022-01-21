@@ -12,6 +12,7 @@ import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.databinding.SortDialogBinding
 import com.example.githubapp.presentation.base.BaseFragment
 import com.example.githubapp.presentation.main.utils.MarginatedVerticalItemDecorator
+import com.example.githubapp.presentation.main.utils.onActionSearch
 import com.example.githubapp.presentation.main.utils.showViewByIndex
 import org.koin.java.KoinJavaComponent.inject
 
@@ -26,25 +27,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mDialog = Dialog(requireContext())
-
-        initRecyclerView()
-        setUpEditText()
-
-        binding.imageViewFilterIcon.setOnClickListener {
-            mLogic.onFilterIconClick()
-        }
-
-        binding.imageViewSearchIcon.setOnClickListener {
-            mLogic.onSearchIconClick()
-        }
+        setScreen()
     }
 
-    override fun onStart() {
+    override fun onStart() = with(mLogic) {
         super.onStart()
 
-        mLogic.observeIsLoading().observe(viewLifecycleOwner) { isLoading ->
+        observeIsLoading().observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 showShimmer()
             } else {
@@ -52,19 +41,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
 
-        mLogic.observeRepositories().observe(viewLifecycleOwner) {
+        observeRepositories().observe(viewLifecycleOwner) {
             mAdapter.mList = it
         }
 
-        mLogic.observeShouldShowFilterDialog().observe(viewLifecycleOwner) {
+        observeShouldShowFilterDialog().observe(viewLifecycleOwner) {
             showFilterDialog()
         }
+    }
+
+    override fun setListeners() = with(binding) {
+        imageViewFilterIcon.setOnClickListener {
+            mLogic.onFilterIconClick()
+        }
+
+        imageViewSearchIcon.setOnClickListener {
+            mLogic.onSearchIconClick()
+        }
+    }
+
+    private fun setScreen() {
+        mDialog = Dialog(requireContext())
+        initRecyclerView()
+        setUpEditText()
     }
 
     private fun setUpEditText() = with(binding) {
         editTextSearchRepositories.apply {
             doAfterTextChanged {
                 mLogic.onSearchRepositoriesTextChange(it.toString())
+            }
+
+            onActionSearch {
+                hideKeyboard()
+                mLogic.onSearchIconClick()
+                false
             }
         }
     }
