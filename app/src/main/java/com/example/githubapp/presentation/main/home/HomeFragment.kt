@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
+import com.example.githubapp.core.extensions.toast
 import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.databinding.SortDialogBinding
 import com.example.githubapp.presentation.base.BaseFragment
@@ -42,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         observeRepositories().observe(viewLifecycleOwner) {
+            toast("CALLED NEW LIST")
             mAdapter.mList = it
         }
 
@@ -100,10 +103,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         mAdapter.setOnAvatarClickListener {
             navController.navigate(
-                HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment()
+                HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment(it)
             )
         }
 
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) {
+                    mLogic.loadMore()
+                }
+            }
+        })
     }
 
     private fun showShimmer() = with(binding) {
@@ -121,18 +132,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mDialog.setTitle(requireContext().getString(R.string.homeScreen_dialogTitle))
         with(dialogBinding) {
             textViewSortByForks.setOnClickListener {
+                onDialogItemClick()
                 mLogic.onSortByForksSelected()
-                mDialog.dismiss()
             }
             textViewSortByStars.setOnClickListener {
+                onDialogItemClick()
                 mLogic.onSortByStarsSelected()
-                mDialog.dismiss()
             }
             textViewSortByUpdated.setOnClickListener {
+                onDialogItemClick()
                 mLogic.onSortByUpdatedSelected()
-                mDialog.dismiss()
             }
         }
         mDialog.show()
+    }
+
+    /**
+     * In order to avoid code dupplication, common behaviour is extracted here.
+     */
+    private fun onDialogItemClick() {
+        binding.recyclerViewRepositories.scrollToPosition(0)
+        mDialog.dismiss()
     }
 }

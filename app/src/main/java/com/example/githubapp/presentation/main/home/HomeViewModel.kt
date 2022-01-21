@@ -14,6 +14,7 @@ import com.example.githubapp.presentation.base.BaseViewModel
 import com.example.githubapp.presentation.base.view.SingleLiveEvent
 import com.example.githubapp.presentation.main.RepositoryView
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase
@@ -34,6 +35,16 @@ class HomeViewModel(
 
     init {
         fetchRepositories(mSearchTerm, mCurrentSortType, mCurrentPage)
+    }
+
+    override fun loadMore() {
+        mCurrentPage += 1
+        viewModelScope.launch {
+            getRepositoriesUseCase(Params(mSearchTerm, mCurrentSortType, mCurrentPage)).fold(
+                ::handleFailure,
+                ::handleMoreRepositories
+            )
+        }
     }
 
     override fun onSortByStarsSelected() {
@@ -60,7 +71,10 @@ class HomeViewModel(
     }
 
     override fun onSearchRepositoriesTextChange(text: String) {
-        mSearchTerm = text.trim()
+        val formattedText = if(text.trim().isEmpty()) {
+            "a"
+        } else text.trim()
+        mSearchTerm = formattedText
     }
 
     /**
@@ -79,6 +93,15 @@ class HomeViewModel(
             )
             mIsLoading.value = false
         }
+    }
+
+    /**
+     * Handling more repositories.
+     * For purpose of this task this method is pretty much simple.
+     */
+    private fun handleMoreRepositories(repositories: Repositories) {
+        _mRepositories.addAll(repositories.list)
+        mRepositories.value = _mRepositories.toList().toView()
     }
 
     /**

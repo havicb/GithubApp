@@ -106,6 +106,12 @@
             tools:listitem="@layout/item_repository"
             android:clipToPadding="false"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar_loadingMoreItems"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"/>
+
     </ViewFlipper>
 
 

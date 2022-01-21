@@ -18,7 +18,8 @@ class GetRepositoriesUseCase(
     override suspend fun run(params: Params): Either<Failure, Repositories> {
         return homeRepository.getRepositories(
             params.searchTerm,
-            RepositorySortType.urlName(params.repositoryType)
+            RepositorySortType.urlName(params.repositoryType),
+            params.page
         ).map { it.toRepositories() }
     }
 }
@@ -28,4 +29,3 @@ data class Params(
     val repositoryType: RepositorySortType?,
     val page: Int
 )
-

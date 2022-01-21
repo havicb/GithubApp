@@ -28,6 +28,7 @@ class HomeRepositoryImpl(
     ): Either<Failure, RepositoryResponse> {
         // I will hardcode this value and use 20.
         val perPage = 20
+
         return repositoryApi.getRepositoriesAsync(searchTerm, repositoryType, perPage, page)
             .getResults()
     }

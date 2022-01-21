@@ -33,7 +33,12 @@
         android:id="@+id/userDetailsFragment"
         android:name="com.example.githubapp.presentation.main.user.UserDetailsFragment"
         android:label="fragment_user_details"
-        tools:layout="@layout/fragment_user_details" />
+        tools:layout="@layout/fragment_user_details">
+
+        <argument
+            android:name="owner"
+            app:argType="com.example.githubapp.presentation.main.OwnerView" />
+    </fragment>
     <fragment
         android:id="@+id/errorFragment"
         android:name="com.example.githubapp.ErrorFragment"
