@@ -6,6 +6,8 @@ import com.example.githubapp.data.home.RepositoryResponse
 import com.example.githubapp.domain.entity.OwnerEntity
 import com.example.githubapp.domain.entity.Repositories
 import com.example.githubapp.domain.entity.RepositoryEntity
+import com.example.githubapp.presentation.main.OwnerView
+import com.example.githubapp.presentation.main.RepositoryView
 
 /**
  * Maps [RepositoryDto] to [RepositoryEntity].
@@ -35,6 +37,7 @@ fun RepositoryDto.toRepositoryEntity() =
         updated_at,
         url,
         visibility,
+        language ?: "Unknown",
         watchers,
         watchers_count,
         open_issues_count
@@ -63,3 +66,31 @@ fun Owner.toOwnerEntity() = OwnerEntity(
  * Maps data logic into business object.
  */
 fun RepositoryResponse.toRepositories() = Repositories(repositories.map { it.toRepositoryEntity() })
+
+/**
+ * Maps [OwnerEntity] to [OwnerView]
+ * Maps bussiness logic into view object.
+ */
+fun OwnerEntity.toOwnerView() = OwnerView(avatarUrl)
+
+/**
+ * Maps [RepositoryEntity] to [RepositoryView]
+ * Maps bussiness logic into view object.
+ */
+fun RepositoryEntity.toRepositoryView() = RepositoryView(
+    id.toString(),
+    gitUrl,
+    fullName,
+    watchersCount.toString(),
+    forksCount.toString(),
+    openIssues.toString(),
+    createdAt,
+    pushedAt,
+    language,
+    owner.toOwnerView()
+)
+
+/**
+ * Converts list of [RepositoryEntity] to list of [RepositoryView]
+ */
+fun List<RepositoryEntity>.toView() = map { it.toRepositoryView() }

@@ -7,15 +7,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubapp.databinding.ItemRepositoryBinding
-import com.example.githubapp.domain.entity.RepositoryEntity
+import com.example.githubapp.presentation.main.OwnerView
+import com.example.githubapp.presentation.main.RepositoryView
+import kotlin.properties.Delegates
 
+@SuppressLint("NotifyDataSetChanged")
 class HomeRepositoriesAdapter(
     private val context: Context,
 ) : RecyclerView.Adapter<HomeRepositoriesAdapter.RepositoriesVH>() {
 
-    // todo: Change this to view class
-    private var mList: List<RepositoryEntity> = emptyList()
-    private var mOnRepositoryClickListener: ((RepositoryEntity) -> Unit)? = null
+    internal var mList: List<RepositoryView> by Delegates.observable(emptyList()) { _, _, _ ->
+        notifyDataSetChanged()
+    }
+    private var mOnRepositoryClickListener: ((RepositoryView) -> Unit)? = null
+    private var mOnAvatarClickListener: ((OwnerView) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesVH =
         RepositoriesVH(
@@ -32,33 +37,34 @@ class HomeRepositoriesAdapter(
 
     override fun getItemCount(): Int = mList.size
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<RepositoryEntity>) {
-        mList = list
-        notifyDataSetChanged()
+    fun setOnRepositoryItemClickListener(listener: (RepositoryView) -> Unit) {
+        this.mOnRepositoryClickListener = listener
     }
 
-    fun setOnItemClickListener(listener: (RepositoryEntity) -> Unit) {
-        this.mOnRepositoryClickListener = listener
+    fun setOnAvatarClickListener(listener: (OwnerView) -> Unit) {
+        this.mOnAvatarClickListener = listener
     }
 
     inner class RepositoriesVH(
         private val binding: ItemRepositoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(repositoryEntity: RepositoryEntity) {
+        fun bind(repositoryView: RepositoryView) {
             with(binding) {
-                textViewFullName.text = repositoryEntity.fullName
-                textViewForks.text = repositoryEntity.forksCount.toString()
-                textViewWatchers.text = repositoryEntity.watchersCount.toString()
-                textViewIssues.text = repositoryEntity.openIssues.toString()
+                textViewFullName.text = repositoryView.fullName
+                textViewForks.text = repositoryView.forks
+                textViewWatchers.text = repositoryView.watchers
+                textViewIssues.text = repositoryView.issues
                 Glide.with(context)
-                    .load(repositoryEntity.owner.avatarUrl)
+                    .load(repositoryView.ownerView.avatarUrl)
                     .circleCrop()
                     .into(imageViewAvatarUrl)
 
                 cardView.setOnClickListener {
-                    mOnRepositoryClickListener?.invoke(repositoryEntity)
+                    mOnRepositoryClickListener?.invoke(repositoryView)
+                }
+                imageViewAvatarUrl.setOnClickListener {
+                    mOnAvatarClickListener?.invoke(repositoryView.ownerView)
                 }
             }
         }

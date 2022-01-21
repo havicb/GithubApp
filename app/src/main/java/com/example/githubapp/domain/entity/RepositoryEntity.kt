@@ -24,6 +24,7 @@ data class RepositoryEntity(
     val updatedAt: String,
     val url: String,
     val visibility: String,
+    val language: String,
     val watchers: Int,
     val watchersCount: Int,
     val openIssues: Int

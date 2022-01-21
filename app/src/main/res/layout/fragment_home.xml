@@ -1,83 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.home.HomeFragment">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/app_bar"/>
+    <ImageView
+        android:id="@+id/imageView_searchIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/search_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editText_searchRepositories"
         android:layout_width="0dp"
-        android:layout_margin="16dp"
-        android:padding="4dp"
         android:layout_height="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        android:drawableStart="@drawable/search_icon"
-        android:drawablePadding="8dp"
-        android:drawableEnd="@drawable/filter_list_icon"
+        android:layout_marginVertical="16dp"
         android:ems="10"
+        android:hint="@string/homeScreen_searchHint"
+        android:imeOptions="actionSearch"
         android:maxLines="1"
-        android:imeOptions="actionDone"
-        android:hint="Find some repositories" />
+        android:padding="4dp"
+        app:layout_constraintEnd_toStartOf="@id/imageView_filterIcon"
+        app:layout_constraintStart_toEndOf="@id/imageView_searchIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_filterIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/filter_list_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <ViewFlipper
         android:id="@+id/viewFlipper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/editText_searchRepositories"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/editText_searchRepositories">
 
         <com.facebook.shimmer.ShimmerFrameLayout
+            style="@style/Shimmer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/Shimmer">
+            android:layout_height="match_parent">
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-               <include
-                   layout="@layout/item_repository_shimmer"/>
+                <include layout="@layout/item_repository_shimmer" />
 
-
-           </LinearLayout>
+            </LinearLayout>
 
 
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -90,9 +92,6 @@
             tools:listitem="@layout/item_repository" />
 
     </ViewFlipper>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

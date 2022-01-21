@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Github App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="homeScreen_searchHint">Find some repositories..</string>
+    <string name="homeScreen_dialogTitle">Sort by</string>
+    <string name="homeScreen_dialogSortByForks">Forks</string>
+    <string name="homeScreen_dialogSortByUpdated">Updated</string>
+    <string name="homeScreen_dialogSortByStars">Stars</string>
+    <string name="repositoryDetails_createdAt">Created at: %s</string>
+    <string name="repositoryDetails_updatedAt">Modified at: %s</string>
+    <string name="repositoryDetails_programmingLanguage">Used language: %s</string>
+    <string name="repositoryDetails_githubUrl">You can visit repo at:<a href="https://www.google.pl/">Google</a></string>
 </resources>

@@ -6,5 +6,8 @@ import retrofit2.http.Query
 
 interface RepositoryApi {
     @GET("search/repositories")
-    suspend fun getRepositoriesAsync(@Query("q") searchTerm: String): Response<RepositoryResponse>
+    suspend fun getRepositoriesAsync(
+        @Query("q") searchTerm: String,
+        @Query("sort") repositoryType: String
+    ): Response<RepositoryResponse>
 }

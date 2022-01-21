@@ -51,7 +51,7 @@ data class RepositoryDto(
     val issues_url: String,
     val keys_url: String,
     val labels_url: String,
-    val language: String,
+    val language: String?,
     val languages_url: String,
     val license: Licence?,
     val merges_url: String,
