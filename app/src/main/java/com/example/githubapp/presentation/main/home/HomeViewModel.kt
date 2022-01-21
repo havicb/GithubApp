@@ -25,6 +25,7 @@ class HomeViewModel(
 
     private val _mRepositories = arrayListOf<RepositoryEntity>()
     private var mSearchTerm = "a"
+    private var mCurrentPage = 1
     private var mCurrentSortType: RepositorySortType? = null
 
     override fun observeIsLoading(): LiveData<Boolean> = mIsLoading
@@ -32,19 +33,22 @@ class HomeViewModel(
     override fun observeRepositories(): LiveData<List<RepositoryView>> = mRepositories
 
     init {
-        fetchRepositories(mSearchTerm, mCurrentSortType)
+        fetchRepositories(mSearchTerm, mCurrentSortType, mCurrentPage)
     }
 
     override fun onSortByStarsSelected() {
-        fetchRepositories(mSearchTerm, RepositorySortType.STARS)
+        mCurrentPage = 1
+        fetchRepositories(mSearchTerm, RepositorySortType.STARS, mCurrentPage)
     }
 
     override fun onSortByForksSelected() {
-        fetchRepositories(mSearchTerm, RepositorySortType.FORKS)
+        mCurrentPage = 1
+        fetchRepositories(mSearchTerm, RepositorySortType.FORKS, mCurrentPage)
     }
 
     override fun onSortByUpdatedSelected() {
-        fetchRepositories(mSearchTerm, RepositorySortType.UPDATED)
+        mCurrentPage = 1
+        fetchRepositories(mSearchTerm, RepositorySortType.UPDATED, mCurrentPage)
     }
 
     override fun onFilterIconClick() {
@@ -52,7 +56,7 @@ class HomeViewModel(
     }
 
     override fun onSearchIconClick() {
-        fetchRepositories(mSearchTerm, null)
+        fetchRepositories(mSearchTerm, null, 1)
     }
 
     override fun onSearchRepositoriesTextChange(text: String) {
@@ -64,11 +68,12 @@ class HomeViewModel(
      */
     private fun fetchRepositories(
         searchTerm: String,
-        repositorySortType: RepositorySortType?
+        repositorySortType: RepositorySortType?,
+        page: Int
     ) {
         viewModelScope.launch {
             mIsLoading.value = true
-            getRepositoriesUseCase(Params(searchTerm, repositorySortType)).fold(
+            getRepositoriesUseCase(Params(searchTerm, repositorySortType, page)).fold(
                 ::handleFailure,
                 ::handleRepositories
             )

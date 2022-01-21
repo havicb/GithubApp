@@ -8,6 +8,8 @@ interface RepositoryApi {
     @GET("search/repositories")
     suspend fun getRepositoriesAsync(
         @Query("q") searchTerm: String,
-        @Query("sort") repositoryType: String
+        @Query("sort") repositoryType: String,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int
     ): Response<RepositoryResponse>
 }

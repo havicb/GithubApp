@@ -11,7 +11,8 @@ import com.example.githubapp.data.BaseRepository
 interface HomeRepository {
     suspend fun getRepositories(
         searchTerm: String,
-        repositoryType: String
+        repositoryType: String,
+        page: Int
     ): Either<Failure, RepositoryResponse>
 }
 
@@ -22,8 +23,12 @@ class HomeRepositoryImpl(
 
     override suspend fun getRepositories(
         searchTerm: String,
-        repositoryType: String
+        repositoryType: String,
+        page: Int
     ): Either<Failure, RepositoryResponse> {
-        return repositoryApi.getRepositoriesAsync(searchTerm, repositoryType).getResults()
+        // I will hardcode this value and use 20.
+        val perPage = 20
+        return repositoryApi.getRepositoriesAsync(searchTerm, repositoryType, perPage, page)
+            .getResults()
     }
 }

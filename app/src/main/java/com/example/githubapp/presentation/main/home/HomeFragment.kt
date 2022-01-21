@@ -103,6 +103,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment()
             )
         }
+
     }
 
     private fun showShimmer() = with(binding) {
