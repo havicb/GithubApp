@@ -24,6 +24,5 @@
         <item name="shimmerBaseColor">@color/mercury</item>
         <item name="homeScreen_forksColor">@color/teal_700</item>
         <item name="homeScreen_issuesColor">@color/purple_200</item>
-
     </style>
 </resources>
