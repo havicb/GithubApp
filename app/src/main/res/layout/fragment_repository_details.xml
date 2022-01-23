@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/textView_createdAt"
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
-        android:textColor="@color/black"/>
+        android:textColor="?primaryTextColor"/>
 
     <TextView
         android:id="@+id/textView_programmingLanguage"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/textView_lastUpdated"
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="24dp"
-        android:textColor="@color/black"/>
+        android:textColor="?primaryTextColor"/>
 
     <TextView
         android:id="@+id/textView_githubUrl"
@@ -66,8 +66,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_programmingLanguage"
         android:layout_marginTop="24dp"
-        android:autoLink="web"
+        android:linksClickable="true"
         android:layout_marginHorizontal="24dp"
-        android:textColor="@color/black"/>
+        android:textColor="?primaryTextColor"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

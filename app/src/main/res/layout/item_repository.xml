@@ -50,7 +50,7 @@
                 android:id="@+id/textView_watchers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="?primaryTextColor"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -63,20 +63,20 @@
                 android:id="@+id/textView_forks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/teal_200"
+                android:textColor="?homeScreen_forksColor"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@id/textView_watchers"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageView_avatarUrl"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"                 />
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/textView_issues"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/purple_500"
+                android:textColor="?homeScreen_issuesColor"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@id/textView_forks"
                 app:layout_constraintBottom_toBottomOf="parent"

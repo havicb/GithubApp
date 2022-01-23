@@ -8,7 +8,7 @@
     <string name="repositoryDetails_createdAt">Created at: %s</string>
     <string name="repositoryDetails_updatedAt">Modified at: %s</string>
     <string name="repositoryDetails_programmingLanguage">Used language: %s</string>
-    <string name="repositoryDetails_githubUrl">You can visit repo at:<a href="https://www.google.pl/">Google</a></string>
+    <string name="repositoryDetails_githubUrl">You can visit repo at:&lt;a href="https://%s">Github&lt;/a></string>
     <string name="errorScreen_genericMessage">Whoops! Some error occured. Try again</string>
     <string name="errorScreen_buttonText">Try again</string>
 </resources>

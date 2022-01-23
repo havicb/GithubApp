@@ -1,10 +1,17 @@
 package com.example.githubapp.presentation.main.utils
 
 import android.content.Context
+import android.os.Build
 import android.util.TypedValue
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ViewFlipper
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
 
 /**
  * Converts Integer of Pixels to Integer of DP.
@@ -41,4 +48,16 @@ fun EditText.onActionSearch(block: () -> Boolean) {
 
         false
     }
+}
+
+fun String.parseIsoToReadableDate(): String {
+    val date = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Date.from(Instant.parse(this))
+    } else {
+        this
+    }
+
+    val dateFormat = SimpleDateFormat(YYYY_MM_DD_HH_MM)
+
+    return dateFormat.format(date)
 }

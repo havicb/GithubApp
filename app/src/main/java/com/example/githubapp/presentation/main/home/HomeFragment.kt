@@ -9,7 +9,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
-import com.example.githubapp.core.extensions.toast
 import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.databinding.SortDialogBinding
 import com.example.githubapp.presentation.base.BaseFragment
@@ -44,7 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         observeRepositories().observe(viewLifecycleOwner) {
-            toast("CALLED NEW LIST")
             mAdapter.mList = it
         }
 
@@ -148,7 +146,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     /**
-     * In order to avoid code dupplication, common behaviour is extracted here.
+     * In order to avoid code duplication, common behaviour is extracted here.
      */
     private fun onDialogItemClick() {
         binding.recyclerViewRepositories.scrollToPosition(0)

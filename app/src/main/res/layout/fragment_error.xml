@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textSize="20sp"
+        android:textColor="?primaryTextColor"
         android:text="@string/errorScreen_genericMessage"
         android:layout_marginHorizontal="24dp"/>
 

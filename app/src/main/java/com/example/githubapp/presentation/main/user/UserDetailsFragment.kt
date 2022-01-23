@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
+import com.example.githubapp.core.extensions.loadImage
 import com.example.githubapp.databinding.FragmentUserDetailsBinding
 import com.example.githubapp.presentation.base.BaseFragment
 
@@ -19,9 +19,7 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            Glide.with(requireContext())
-                .load(mArgs.owner.avatarUrl)
-                .into(imageViewUserImage)
+            loadImage(mArgs.owner.avatarUrl, imageViewUserImage)
         }
     }
 }

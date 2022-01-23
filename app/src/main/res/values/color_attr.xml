@@ -4,9 +4,12 @@
     Used to declare colors to use in application.
     First define color here, then set it inside themes.xml
     -->
-
     <attr name="primaryAppBarBackgroundColor" format="color"/>
     <attr name="primaryTextColor" format="color"/>
     <attr name="primaryButtonBackgroundColor" format="color"/>
+    <attr name="shimmerBackgroundColor" format="color" />
+    <attr name="shimmerBaseColor" format="color" />
+    <attr name="homeScreen_forksColor" format="color" />
+    <attr name="homeScreen_issuesColor" format="color" />
 
 </resources>
