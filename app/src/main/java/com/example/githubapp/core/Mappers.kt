@@ -3,9 +3,12 @@ package com.example.githubapp.core
 import com.example.githubapp.data.home.Owner
 import com.example.githubapp.data.home.RepositoryDto
 import com.example.githubapp.data.home.RepositoryResponse
+import com.example.githubapp.data.user.AccessTokenResponse
 import com.example.githubapp.domain.entity.OwnerEntity
 import com.example.githubapp.domain.entity.Repositories
 import com.example.githubapp.domain.entity.RepositoryEntity
+import com.example.githubapp.domain.usecase.TokenType
+import com.example.githubapp.domain.usecase.UserData
 import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
 
@@ -94,3 +97,8 @@ fun RepositoryEntity.toRepositoryView() = RepositoryView(
  * Converts list of [RepositoryEntity] to list of [RepositoryView]
  */
 fun List<RepositoryEntity>.toView() = map { it.toRepositoryView() }
+
+/**
+ * Convert [AccessTokenResponse] to [UserData]
+ */
+fun AccessTokenResponse.toUserData() = UserData(this.accessToken, TokenType.from(accessToken))

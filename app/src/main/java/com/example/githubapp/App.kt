@@ -6,6 +6,7 @@ import com.example.githubapp.data.di.dataModule
 import com.example.githubapp.di.networkModule
 import com.example.githubapp.di.useCaseModule
 import com.example.githubapp.presentation.base.view.baseModule
+import com.example.githubapp.presentation.main.auth.authModule
 import com.example.githubapp.presentation.main.home.homeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,7 +17,16 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(listOf(networkModule, baseModule, homeModule, dataModule, useCaseModule))
+            modules(
+                listOf(
+                    networkModule,
+                    baseModule,
+                    homeModule,
+                    dataModule,
+                    useCaseModule,
+                    authModule
+                )
+            )
         }
 
         initLogger()

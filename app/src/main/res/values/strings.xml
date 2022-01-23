@@ -11,4 +11,6 @@
     <string name="repositoryDetails_githubUrl">You can visit repo at:&lt;a href="https://%s">Github&lt;/a></string>
     <string name="errorScreen_genericMessage">Whoops! Some error occured. Try again</string>
     <string name="errorScreen_buttonText">Try again</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

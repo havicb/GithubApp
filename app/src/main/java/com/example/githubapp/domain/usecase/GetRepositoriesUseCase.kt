@@ -5,7 +5,7 @@ import com.example.githubapp.core.Failure
 import com.example.githubapp.core.enums.RepositorySortType
 import com.example.githubapp.core.map
 import com.example.githubapp.core.toRepositories
-import com.example.githubapp.data.home.HomeRepository
+import com.example.githubapp.data.home.GithubRepository
 import com.example.githubapp.domain.base.BaseUseCase
 import com.example.githubapp.domain.entity.Repositories
 
@@ -13,10 +13,10 @@ import com.example.githubapp.domain.entity.Repositories
  * An use-case that allow user to fetch all repositories.
  */
 class GetRepositoriesUseCase(
-    private val homeRepository: HomeRepository
+    private val githubRepository: GithubRepository
 ) : BaseUseCase<Repositories, Params>() {
     override suspend fun run(params: Params): Either<Failure, Repositories> {
-        return homeRepository.getRepositories(
+        return githubRepository.getRepositories(
             params.searchTerm,
             RepositorySortType.urlName(params.repositoryType),
             params.page

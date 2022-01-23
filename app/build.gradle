@@ -19,6 +19,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField 'String', 'API_BASE_URL', '"https://api.github.com/"'
+        buildConfigField 'String', 'GITHUB_AUTH_URL', '"https://github.com/"'
+        buildConfigField 'String', 'CLIENT_ID', '"c0f3ecdcca91f832dcb4"'
+        buildConfigField 'String', 'CLIENT_SECRETS', '"7c425775f638b6c7968db274270a80943c6cf2db"'
+        buildConfigField 'String', 'REDIRECT_CALLBACK', '"githubapp://callback"'
     }
 
     buildFeatures {
@@ -52,6 +56,7 @@ dependencies {
     // data
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$gsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
     // di
     implementation "io.insert-koin:koin-android:$koinVersion"

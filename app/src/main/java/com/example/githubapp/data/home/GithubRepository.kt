@@ -5,10 +5,7 @@ import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.data.BaseRepository
 
-/**
- * In order to avoid confused name: RepositoryRepository I have used this HomeRepository name.
- */
-interface HomeRepository {
+interface GithubRepository {
     suspend fun getRepositories(
         searchTerm: String,
         repositoryType: String,
@@ -16,10 +13,10 @@ interface HomeRepository {
     ): Either<Failure, RepositoryResponse>
 }
 
-class HomeRepositoryImpl(
+class GithubRepositoryImpl(
     networkHandler: NetworkHandler,
-    private val repositoryApi: RepositoryApi,
-) : BaseRepository(networkHandler), HomeRepository {
+    private val githubApi: GithubApi,
+) : BaseRepository(networkHandler), GithubRepository {
 
     override suspend fun getRepositories(
         searchTerm: String,
@@ -29,7 +26,7 @@ class HomeRepositoryImpl(
         // I will hardcode this value and use 20.
         val perPage = 20
 
-        return repositoryApi.getRepositoriesAsync(searchTerm, repositoryType, perPage, page)
+        return githubApi.getRepositoriesAsync(searchTerm, repositoryType, perPage, page)
             .getResults()
     }
 }
