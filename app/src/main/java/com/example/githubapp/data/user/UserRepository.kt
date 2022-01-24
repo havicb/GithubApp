@@ -24,6 +24,6 @@ class UserRepositoryImpl(
         clientSecret: String,
         code: String
     ): Either<Failure, AccessTokenResponse> {
-        return authApi.getAccessToken(clientId, clientSecret, code).getResults()
+        return authApi.getAccessTokenAsync(clientId, clientSecret, code).getResults()
     }
 }

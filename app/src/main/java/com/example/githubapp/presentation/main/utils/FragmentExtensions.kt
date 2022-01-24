@@ -1,6 +1,5 @@
 package com.example.githubapp.core.extensions
 
-import android.content.Context
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment

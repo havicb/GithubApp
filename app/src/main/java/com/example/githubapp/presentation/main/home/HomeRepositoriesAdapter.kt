@@ -16,11 +16,11 @@ class HomeRepositoriesAdapter(
     private val context: Context,
 ) : RecyclerView.Adapter<HomeRepositoriesAdapter.RepositoriesVH>() {
 
-    internal var mList: List<RepositoryView> by Delegates.observable(emptyList()) { _, _, _ ->
+    internal var list: List<RepositoryView> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
     }
-    private var mOnRepositoryClickListener: ((RepositoryView) -> Unit)? = null
-    private var mOnAvatarClickListener: ((OwnerView) -> Unit)? = null
+    private var onRepositoryClickListener: ((RepositoryView) -> Unit)? = null
+    private var onAvatarClickListener: ((OwnerView) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoriesVH =
         RepositoriesVH(
@@ -32,17 +32,17 @@ class HomeRepositoriesAdapter(
         )
 
     override fun onBindViewHolder(holder: RepositoriesVH, position: Int) {
-        holder.bind(mList[position])
+        holder.bind(list[position])
     }
 
-    override fun getItemCount(): Int = mList.size
+    override fun getItemCount(): Int = list.size
 
     fun setOnRepositoryItemClickListener(listener: (RepositoryView) -> Unit) {
-        this.mOnRepositoryClickListener = listener
+        this.onRepositoryClickListener = listener
     }
 
     fun setOnAvatarClickListener(listener: (OwnerView) -> Unit) {
-        this.mOnAvatarClickListener = listener
+        this.onAvatarClickListener = listener
     }
 
     inner class RepositoriesVH(
@@ -61,10 +61,10 @@ class HomeRepositoriesAdapter(
                     .into(imageViewAvatarUrl)
 
                 cardView.setOnClickListener {
-                    mOnRepositoryClickListener?.invoke(repositoryView)
+                    onRepositoryClickListener?.invoke(repositoryView)
                 }
                 imageViewAvatarUrl.setOnClickListener {
-                    mOnAvatarClickListener?.invoke(repositoryView.ownerView)
+                    onAvatarClickListener?.invoke(repositoryView.ownerView)
                 }
             }
         }

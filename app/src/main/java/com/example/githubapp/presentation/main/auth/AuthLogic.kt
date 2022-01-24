@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import com.example.githubapp.domain.entity.UserView
 
 interface AuthLogic {
-    fun observeLoginLoading(): LiveData<Boolean>
-    fun observeNavigation(): LiveData<UserView?>
-    fun observeCallIntent(): LiveData<Unit>
+    val observeIsLoading: LiveData<Boolean>
+    val observeShouldNavigate: LiveData<UserView?>
+    val observeShouldCallIntent: LiveData<Unit>
+
     fun onCodeAccquired(code: String?)
     fun onSkipButton()
     fun onAuthButton()

@@ -1,12 +1,12 @@
-package com.example.githubapp.data.home
+package com.example.githubapp.data.github
 
 /**
  * I have used plugin Generate POJO from Json.
  * Because of that they are using snake case here in repository dto, and they have not added @SerializedName(fieldName)
- * Proper way to do this is to used SerializedName annotation, and use carmel case here.
+ * Proper way to do this is to use SerializedName annotation, and use carmel case here.
  * But for this exam purpose I will leave it as it is.
  */
-data class RepositoryDto(
+data class GithubRepositoryDto(
     val allow_forking: Boolean,
     val archive_url: String,
     val archived: Boolean,

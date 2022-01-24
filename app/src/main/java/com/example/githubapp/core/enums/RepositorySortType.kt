@@ -9,7 +9,7 @@ enum class RepositorySortType(
 
     companion object {
         fun urlName(type: RepositorySortType?): String {
-            if(type == null)
+            if (type == null)
                 return ""
             return when (type) {
                 UPDATED -> "updated"

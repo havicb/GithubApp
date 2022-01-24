@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import com.example.githubapp.ErrorFragment
-import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
-import com.example.githubapp.core.extensions.toast
 import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.databinding.SortDialogBinding
+import com.example.githubapp.domain.entity.UserView
 import com.example.githubapp.presentation.base.BaseFragment
+import com.example.githubapp.presentation.main.error.ErrorFragment
 import com.example.githubapp.presentation.main.utils.MarginatedVerticalItemDecorator
 import com.example.githubapp.presentation.main.utils.onActionSearch
 import com.example.githubapp.presentation.main.utils.showView
@@ -26,42 +25,42 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = FragmentHomeBinding::inflate
 
-    private val mLogic: HomeLogic by inject(HomeLogic::class.java)
-    private val mAdapter: HomeRepositoriesAdapter by inject(HomeRepositoriesAdapter::class.java)
-    private val mArgs: HomeFragmentArgs by navArgs()
-    private lateinit var mDialog: Dialog
+    private lateinit var dialog: Dialog
+
+    private val logic: HomeLogic by inject(HomeLogic::class.java)
+    private val repositoriesAdapter: HomeRepositoriesAdapter by inject(HomeRepositoriesAdapter::class.java)
+
+    private val args: HomeFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mArgs.loggedUser?.let {
-            binding.cardUserCredentials.showView()
-            binding.textViewUsername.text = it.username
-            binding.textViewLocation.text = it.location
+        args.loggedUser?.let {
+            onLoggedUser(it)
         }
-        mLogic.fetchData()
+        logic.fetchData()
         setScreen()
     }
 
-    override fun onStart() = with(mLogic) {
+    override fun onStart() = with(logic) {
         super.onStart()
 
         // In real case scenario I would create generic extension for this.
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(ErrorFragment.ERROR_FRAGMENT_KEY)
             ?.observe(viewLifecycleOwner) { shouldFetch ->
                 if (shouldFetch) {
-                    mLogic.fetchData()
+                    logic.fetchData()
                 }
             }
 
-        observeRepositoriesLoadingFailure().observe(viewLifecycleOwner) {
+        observeRepositoriesFailedLoading.observe(viewLifecycleOwner) {
             navController.navigate(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
         }
 
-        observeGenericError().observe(viewLifecycleOwner) {
+        observeGenericError.observe(viewLifecycleOwner) {
             showSnackbar()
         }
 
-        observeIsLoading().observe(viewLifecycleOwner) { isLoading ->
+        observeLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 showShimmer()
             } else {
@@ -69,27 +68,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
 
-        observeRepositories().observe(viewLifecycleOwner) {
-            mAdapter.mList = it
+        observeRepositories.observe(viewLifecycleOwner) {
+            repositoriesAdapter.list = it
         }
 
-        observeShouldShowFilterDialog().observe(viewLifecycleOwner) {
+        observeShouldShowFilterDialog.observe(viewLifecycleOwner) {
             showFilterDialog()
         }
     }
 
     override fun setListeners() = with(binding) {
         imageViewFilterIcon.setOnClickListener {
-            mLogic.onFilterIconClick()
+            logic.onFilterIconClick()
         }
 
         imageViewSearchIcon.setOnClickListener {
-            mLogic.onSearchIconClick()
+            logic.onSearchIconClick()
         }
     }
 
     private fun setScreen() {
-        mDialog = Dialog(requireContext())
+        dialog = Dialog(requireContext())
         initRecyclerView()
         setUpEditText()
     }
@@ -97,12 +96,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setUpEditText() = with(binding) {
         editTextSearchRepositories.apply {
             doAfterTextChanged {
-                mLogic.onSearchRepositoriesTextChange(it.toString())
+                logic.onSearchRepositoriesTextChange(it.toString())
             }
 
             onActionSearch {
                 hideKeyboard()
-                mLogic.onSearchIconClick()
+                logic.onSearchIconClick()
                 false
             }
         }
@@ -113,20 +112,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
      * Also initialize all listeners that are coupled to RV
      */
     private fun initRecyclerView() = with(binding.recyclerViewRepositories) {
-        adapter = mAdapter
+        adapter = repositoriesAdapter
         addItemDecoration(
             MarginatedVerticalItemDecorator(
                 requireContext(),
                 12
             )
         )
-        mAdapter.setOnRepositoryItemClickListener {
+        repositoriesAdapter.setOnRepositoryItemClickListener {
             navController.navigate(
                 HomeFragmentDirections.actionHomeFragmentToRepositoryDetailsFragment(it)
             )
         }
 
-        mAdapter.setOnAvatarClickListener {
+        repositoriesAdapter.setOnAvatarClickListener {
             navController.navigate(
                 HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment(it)
             )
@@ -136,10 +135,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    mLogic.loadMore()
+                    logic.loadMore()
                 }
             }
         })
+    }
+
+    private fun onLoggedUser(user: UserView) = with(binding) {
+        cardUserCredentials.showView()
+        textViewUsername.text = user.username
+        textViewLocation.text = user.location
     }
 
     private fun showShimmer() = with(binding) {
@@ -153,23 +158,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun showFilterDialog() {
         // todo: Move this to separate class.
         val dialogBinding = SortDialogBinding.inflate(LayoutInflater.from(requireContext()))
-        mDialog.setContentView(dialogBinding.root)
-        mDialog.setTitle(requireContext().getString(R.string.homeScreen_dialogTitle))
+        dialog.setContentView(dialogBinding.root)
         with(dialogBinding) {
             textViewSortByForks.setOnClickListener {
                 onDialogItemClick()
-                mLogic.onSortByForksSelected()
+                logic.onSortByForksSelected()
             }
             textViewSortByStars.setOnClickListener {
                 onDialogItemClick()
-                mLogic.onSortByStarsSelected()
+                logic.onSortByStarsSelected()
             }
             textViewSortByUpdated.setOnClickListener {
                 onDialogItemClick()
-                mLogic.onSortByUpdatedSelected()
+                logic.onSortByUpdatedSelected()
             }
         }
-        mDialog.show()
+        dialog.show()
     }
 
     /**
@@ -177,6 +181,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
      */
     private fun onDialogItemClick() {
         binding.recyclerViewRepositories.scrollToPosition(0)
-        mDialog.dismiss()
+        dialog.dismiss()
     }
 }

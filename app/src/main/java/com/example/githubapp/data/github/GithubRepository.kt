@@ -1,4 +1,4 @@
-package com.example.githubapp.data.home
+package com.example.githubapp.data.github
 
 import com.example.githubapp.NetworkHandler
 import com.example.githubapp.core.Either
@@ -11,7 +11,7 @@ interface GithubRepository {
         searchTerm: String,
         repositoryType: String,
         page: Int
-    ): Either<Failure, RepositoryResponse>
+    ): Either<Failure, GithubRepositoryResponse>
 
     suspend fun getLoggedInUser(accessToken: String): Either<Failure, UserResponse>
 }
@@ -25,7 +25,7 @@ class GithubRepositoryImpl(
         searchTerm: String,
         repositoryType: String,
         page: Int
-    ): Either<Failure, RepositoryResponse> {
+    ): Either<Failure, GithubRepositoryResponse> {
         // I will hardcode this value and use 20.
         val perPage = 20
 

@@ -14,7 +14,7 @@ import org.koin.java.KoinJavaComponent.inject
 abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     private var _binding: ViewBinding? = null
-    private val viewLogic: BaseLogic by inject(BaseLogic::class.java)
+    private val logic: BaseLogic by inject(BaseLogic::class.java)
 
     @Suppress("UNCHECKED_CAST")
     internal val binding: T
@@ -38,7 +38,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        viewLogic.observeNavigationEvent().observe(viewLifecycleOwner) {
+        logic.observeNavigationEvent().observe(viewLifecycleOwner) {
             when (it) {
                 NavigationEvent.Back -> navController.popBackStack()
                 is NavigationEvent.To -> navController.navigate(it.directions)

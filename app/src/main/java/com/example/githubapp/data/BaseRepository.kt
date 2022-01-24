@@ -11,7 +11,7 @@ import java.net.SocketTimeoutException
 abstract class BaseRepository(private val networkHandler: NetworkHandler) {
 
     internal suspend inline fun <reified T> Deferred<Response<T>>.getResults(): Either<Failure, T> {
-        if(!networkHandler.isNetworkAvailable()) {
+        if (!networkHandler.isNetworkAvailable()) {
             return Either.Left(Failure.NetworkConnectionFailure("No internet available"))
         }
         return try {
@@ -38,7 +38,7 @@ abstract class BaseRepository(private val networkHandler: NetworkHandler) {
             HttpURLConnection.HTTP_NOT_FOUND -> Either.Left(Failure.NotFound(message))
             HttpURLConnection.HTTP_FORBIDDEN -> Either.Left(Failure.Forbidden(message))
             HttpURLConnection.HTTP_UNAUTHORIZED -> Either.Left(Failure.NotAuthorized(message))
-            else -> Either.Left(Failure.OtherFailure("Some message"))
+            else -> Either.Left(Failure.OtherFailure("Some error occurred!"))
         }
     }
 }

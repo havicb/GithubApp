@@ -1,12 +1,12 @@
-package com.example.githubapp.data.home
+package com.example.githubapp.data.github
 
 import com.google.gson.annotations.SerializedName
 
-data class RepositoryResponse(
+data class GithubRepositoryResponse(
     @SerializedName("total_count")
     val totalCount: Long,
     @SerializedName("incomplete_results")
     val incompleteResults: Boolean,
     @SerializedName("items")
-    val repositories: List<RepositoryDto>
+    val githubRepositories: List<GithubRepositoryDto>
 )

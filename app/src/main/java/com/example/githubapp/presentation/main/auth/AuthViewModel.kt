@@ -21,34 +21,35 @@ class AuthViewModel(
     private val getLoggedInUserUseCase: GetLoggedInUserUseCase
 ) : BaseViewModel(), AuthLogic {
 
-    private val mCallIntent = SingleLiveEvent<Unit>()
-    private val mUser = SingleLiveEvent<UserView?>()
-    private val mLoginLoading = MutableLiveData<Boolean>()
+    private val shouldCallIntent = SingleLiveEvent<Unit>()
+    private val shouldNavigate = SingleLiveEvent<UserView?>()
+    private val isLoading = MutableLiveData<Boolean>()
 
-    private var mHasUserLoggedIn = false
-    private var _user: User? = null
+    private var hasUserLoggedIn = false
+    private var currentUser: User? = null
 
-    override fun observeLoginLoading(): LiveData<Boolean> = mLoginLoading
-    override fun observeNavigation(): LiveData<UserView?> = mUser
-    override fun observeCallIntent(): LiveData<Unit> = mCallIntent
+    override val observeIsLoading: LiveData<Boolean>
+        get() = isLoading
+    override val observeShouldNavigate: LiveData<UserView?>
+        get() = shouldNavigate
+    override val observeShouldCallIntent: LiveData<Unit>
+        get() = shouldCallIntent
 
     override fun onSkipButton() {
-        mUser.value = null
+        shouldNavigate.value = null
     }
 
     override fun onAuthButton() {
-        if (mHasUserLoggedIn) {
-            mUser.value = _user?.toView()
+        if (hasUserLoggedIn) {
+            shouldNavigate.value = currentUser?.toView()
         } else {
-            mCallIntent.value = Unit
+            shouldCallIntent.value = Unit
         }
     }
 
     override fun onCodeAccquired(code: String?) {
-        code?.let {
-            if (!mHasUserLoggedIn) {
-                fetchAccessToken(it)
-            }
+        if (!hasUserLoggedIn && code != null) {
+            fetchAccessToken(code)
         }
     }
 
@@ -57,22 +58,22 @@ class AuthViewModel(
     }
 
     private fun handleAccessToken(tokenData: TokenData) = viewModelScope.launch {
-        mLoginLoading.value = true
+        isLoading.value = true
         getLoggedInUserUseCase(TokenParam(tokenData.accessToken)).fold(
             ::handleFailure,
             ::handleUser
         )
-        mLoginLoading.value = false
+        isLoading.value = false
     }
 
     private fun handleUser(user: User) {
-        mHasUserLoggedIn = true
-        _user = user
-        mUser.value = user.toView()
+        hasUserLoggedIn = true
+        currentUser = user
+        this.shouldNavigate.value = user.toView()
     }
 
     private fun handleFailure(failure: Failure) {
-        mHasUserLoggedIn = false
+        hasUserLoggedIn = false
         // todo: Handle failure
     }
 }

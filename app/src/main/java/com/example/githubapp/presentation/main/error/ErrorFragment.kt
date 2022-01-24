@@ -1,4 +1,4 @@
-package com.example.githubapp
+package com.example.githubapp.presentation.main.error
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

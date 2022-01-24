@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/errorFragment"
-        android:name="com.example.githubapp.ErrorFragment"
+        android:name="com.example.githubapp.presentation.main.error.ErrorFragment"
         android:label="fragment_error"
         tools:layout="@layout/fragment_error" />
     <fragment

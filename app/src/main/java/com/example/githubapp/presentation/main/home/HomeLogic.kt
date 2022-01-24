@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import com.example.githubapp.presentation.main.RepositoryView
 
 interface HomeLogic {
+    val observeGenericError: LiveData<Unit>
+    val observeRepositoriesFailedLoading: LiveData<Unit>
+    val observeLoading: LiveData<Boolean>
+    val observeShouldShowFilterDialog: LiveData<Unit>
+    val observeRepositories: LiveData<List<RepositoryView>>
+
     fun fetchData()
-    fun observeGenericError(): LiveData<Unit>
-    fun observeRepositoriesLoadingFailure(): LiveData<Unit>
-    fun observeIsLoading(): LiveData<Boolean>
-    fun observeShouldShowFilterDialog(): LiveData<Unit>
-    fun observeRepositories(): LiveData<List<RepositoryView>>
     fun loadMore()
     fun onSortByStarsSelected()
     fun onSortByForksSelected()

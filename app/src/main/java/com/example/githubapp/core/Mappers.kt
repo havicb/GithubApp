@@ -1,9 +1,9 @@
 package com.example.githubapp.core
 
 import com.example.githubapp.data.auth.AccessTokenResponse
-import com.example.githubapp.data.home.Owner
-import com.example.githubapp.data.home.RepositoryDto
-import com.example.githubapp.data.home.RepositoryResponse
+import com.example.githubapp.data.github.Owner
+import com.example.githubapp.data.github.GithubRepositoryDto
+import com.example.githubapp.data.github.GithubRepositoryResponse
 import com.example.githubapp.data.user.UserResponse
 import com.example.githubapp.domain.entity.OwnerEntity
 import com.example.githubapp.domain.entity.Repositories
@@ -16,27 +16,27 @@ import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
 
 /**
- * Maps [RepositoryDto] to [RepositoryEntity].
+ * Maps [GithubRepositoryDto] to [RepositoryEntity].
  */
-fun RepositoryDto.toRepositoryEntity() =
+fun GithubRepositoryDto.toRepositoryEntity() =
     RepositoryEntity(
         clone_url,
         comments_url,
         commits_url,
         created_at,
         default_branch,
-        description ?: "",
+        description ?: "Unknown",
         disabled,
         downloads_url,
         forks_count,
         full_name,
         git_url,
         has_downloads,
-        homepage ?: "",
+        homepage ?: "Unknown",
         id,
         name,
         owner.toOwnerEntity(),
-        pushed_at ?: "",
+        pushed_at ?: "Unknown",
         releases_url,
         score,
         size,
@@ -68,10 +68,10 @@ fun Owner.toOwnerEntity() = OwnerEntity(
 )
 
 /**
- * Maps [RepositoryResponse] to [Repositories]
+ * Maps [GithubRepositoryResponse] to [Repositories]
  * Maps data logic into business object.
  */
-fun RepositoryResponse.toRepositories() = Repositories(repositories.map { it.toRepositoryEntity() })
+fun GithubRepositoryResponse.toRepositories() = Repositories(githubRepositories.map { it.toRepositoryEntity() })
 
 /**
  * Maps [OwnerEntity] to [OwnerView]

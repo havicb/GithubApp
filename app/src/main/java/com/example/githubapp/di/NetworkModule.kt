@@ -34,8 +34,13 @@ val networkModule = module {
             .create()
     }
     single { createOkHttpClient(get(), get()) }
-    single(named("githubRetrofit")) { createGithubRetrofit(okHttpClient = get(), gson = get()) }
-    single(named("authRetrofit")) { createAuthRetrofit(get(), get()) }
+    single(named(DiConstants.GITHUB_INSTANCE_KEY)) {
+        createGithubRetrofit(
+            okHttpClient = get(),
+            gson = get()
+        )
+    }
+    single(named(DiConstants.AUTH_INSTANCE_KEY)) { createAuthRetrofit(get(), get()) }
 }
 
 private fun createOkHttpClient(

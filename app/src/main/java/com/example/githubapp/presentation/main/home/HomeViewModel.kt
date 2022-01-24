@@ -20,31 +20,36 @@ class HomeViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase
 ) : BaseViewModel(), HomeLogic {
 
-    private val mRepositories = MutableLiveData<List<RepositoryView>>()
-    private val mShouldShowFilterDialog = SingleLiveEvent<Unit>()
-    private val mIsLoading = MutableLiveData<Boolean>()
-    private val mRepositoryFailedToLoad = SingleLiveEvent<Unit>()
-    private val mGenericError = SingleLiveEvent<Unit>()
+    private val repositories = MutableLiveData<List<RepositoryView>>()
+    private val shouldShowFilterDialog = SingleLiveEvent<Unit>()
+    private val isLoading = MutableLiveData<Boolean>()
+    private val repositoriesFailedLoading = SingleLiveEvent<Unit>()
+    private val genericError = SingleLiveEvent<Unit>()
 
-    private val _mRepositories = arrayListOf<RepositoryEntity>()
-    private var mSearchTerm = "a"
-    private var mCurrentPage = 1
-    private var mCurrentSortType: RepositorySortType? = null
+    private val allRepositories = arrayListOf<RepositoryEntity>()
+    private var searchTerm = "a"
+    private var currentPage = 1
+    private var currentSortType: RepositorySortType? = null
 
-    override fun observeGenericError(): LiveData<Unit> = mGenericError
-    override fun observeRepositoriesLoadingFailure(): LiveData<Unit> = mRepositoryFailedToLoad
-    override fun observeIsLoading(): LiveData<Boolean> = mIsLoading
-    override fun observeShouldShowFilterDialog(): LiveData<Unit> = mShouldShowFilterDialog
-    override fun observeRepositories(): LiveData<List<RepositoryView>> = mRepositories
+    override val observeGenericError: LiveData<Unit>
+        get() = genericError
+    override val observeRepositoriesFailedLoading: LiveData<Unit>
+        get() = repositoriesFailedLoading
+    override val observeLoading: LiveData<Boolean>
+        get() = isLoading
+    override val observeShouldShowFilterDialog: LiveData<Unit>
+        get() = shouldShowFilterDialog
+    override val observeRepositories: LiveData<List<RepositoryView>>
+        get() = repositories
 
     override fun fetchData() {
-        fetchRepositories(mSearchTerm, mCurrentSortType, mCurrentPage)
+        fetchRepositories(searchTerm, currentSortType, currentPage)
     }
 
     override fun loadMore() {
-        mCurrentPage += 1
+        currentPage += 1
         viewModelScope.launch {
-            getRepositoriesUseCase(Params(mSearchTerm, mCurrentSortType, mCurrentPage)).fold(
+            getRepositoriesUseCase(Params(searchTerm, currentSortType, currentPage)).fold(
                 ::handleFailure,
                 ::handleMoreRepositories
             )
@@ -52,33 +57,33 @@ class HomeViewModel(
     }
 
     override fun onSortByStarsSelected() {
-        mCurrentPage = 1
-        fetchRepositories(mSearchTerm, RepositorySortType.STARS, mCurrentPage)
+        currentPage = 1
+        fetchRepositories(searchTerm, RepositorySortType.STARS, currentPage)
     }
 
     override fun onSortByForksSelected() {
-        mCurrentPage = 1
-        fetchRepositories(mSearchTerm, RepositorySortType.FORKS, mCurrentPage)
+        currentPage = 1
+        fetchRepositories(searchTerm, RepositorySortType.FORKS, currentPage)
     }
 
     override fun onSortByUpdatedSelected() {
-        mCurrentPage = 1
-        fetchRepositories(mSearchTerm, RepositorySortType.UPDATED, mCurrentPage)
+        currentPage = 1
+        fetchRepositories(searchTerm, RepositorySortType.UPDATED, currentPage)
     }
 
     override fun onFilterIconClick() {
-        mShouldShowFilterDialog.value = Unit
+        shouldShowFilterDialog.value = Unit
     }
 
     override fun onSearchIconClick() {
-        fetchRepositories(mSearchTerm, null, 1)
+        fetchRepositories(searchTerm, null, 1)
     }
 
     override fun onSearchRepositoriesTextChange(text: String) {
         val formattedText = if (text.trim().isEmpty()) {
             "a"
         } else text.trim()
-        mSearchTerm = formattedText
+        searchTerm = formattedText
     }
 
     /**
@@ -90,13 +95,13 @@ class HomeViewModel(
         page: Int
     ) {
         viewModelScope.launch {
-            mIsLoading.value = true
+            isLoading.value = true
             delay(1000)
             getRepositoriesUseCase(Params(searchTerm, repositorySortType, page)).fold(
                 ::handleFailure,
                 ::handleRepositories
             )
-            mIsLoading.value = false
+            isLoading.value = false
         }
     }
 
@@ -105,8 +110,8 @@ class HomeViewModel(
      * For purpose of this task this method is pretty much simple.
      */
     private fun handleMoreRepositories(repositories: Repositories) {
-        _mRepositories.addAll(repositories.list)
-        mRepositories.value = _mRepositories.toList().toView()
+        allRepositories.addAll(repositories.list)
+        this.repositories.value = allRepositories.toList().toView()
     }
 
     /**
@@ -114,8 +119,8 @@ class HomeViewModel(
      */
     private fun handleFailure(failure: Failure) {
         when (failure) {
-            is Failure.NetworkFailure -> mRepositoryFailedToLoad.value = Unit
-            is Failure.OtherFailure -> mGenericError.value = Unit
+            is Failure.NetworkFailure -> repositoriesFailedLoading.value = Unit
+            is Failure.OtherFailure -> genericError.value = Unit
         }
     }
 
@@ -123,10 +128,10 @@ class HomeViewModel(
      * Method for handling successful response.
      */
     private fun handleRepositories(repositories: Repositories) {
-        _mRepositories.apply {
+        allRepositories.apply {
             clear()
             addAll(repositories.list)
         }
-        mRepositories.value = repositories.list.toView()
+        this.repositories.value = repositories.list.toView()
     }
 }

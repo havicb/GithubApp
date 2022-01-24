@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Single live event triggers only when there is explicit call to variable.
  * This helps us to avoid some common problems with mutable live data(navigation, error)
  */
-
 class SingleLiveEvent<T> : MutableLiveData<T>() {
     private val mPending = AtomicBoolean(false)
 

@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ class RepositoryDetailsFragment : BaseFragment<FragmentRepositoryDetailsBinding>
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentRepositoryDetailsBinding
         get() = FragmentRepositoryDetailsBinding::inflate
 
-    private val mArgs by navArgs<RepositoryDetailsFragmentArgs>()
+    private val args by navArgs<RepositoryDetailsFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +28,7 @@ class RepositoryDetailsFragment : BaseFragment<FragmentRepositoryDetailsBinding>
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setScreen() = with(mArgs.repository) {
+    private fun setScreen() = with(args.repository) {
         binding.textViewFullName.text = fullName
         binding.textViewCreatedAt.text =
             getString(
@@ -45,7 +44,12 @@ class RepositoryDetailsFragment : BaseFragment<FragmentRepositoryDetailsBinding>
             getString(R.string.repositoryDetails_programmingLanguage, language)
         binding.textViewGithubUrl.apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = Html.fromHtml(getString(R.string.repositoryDetails_githubUrl, removeGitPrefix(gitHubUrl)))
+            text = Html.fromHtml(
+                getString(
+                    R.string.repositoryDetails_githubUrl,
+                    removeGitPrefix(gitHubUrl)
+                )
+            )
         }
         loadCircleImage(ownerView.avatarUrl, binding.imageViewAutorImage)
     }

@@ -17,34 +17,34 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAuthBinding
         get() = FragmentAuthBinding::inflate
 
-    private val mLogic: AuthLogic by KoinJavaComponent.inject(AuthLogic::class.java)
+    private val logic: AuthLogic by KoinJavaComponent.inject(AuthLogic::class.java)
 
-    override fun onStart() = with(mLogic) {
+    override fun onStart() = with(logic) {
         super.onStart()
 
-        observeLoginLoading().observe(viewLifecycleOwner) { isLoading ->
+        observeIsLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                onLoginLoading()
+                onLoading()
             } else {
-                onStopLoginLoading()
+                onStopLoading()
             }
         }
 
-        observeNavigation().observe(viewLifecycleOwner) {
+        observeShouldNavigate.observe(viewLifecycleOwner) {
             navController.navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment(it))
         }
 
-        observeCallIntent().observe(viewLifecycleOwner) {
+        observeShouldCallIntent.observe(viewLifecycleOwner) {
             startActivity(Intent().gitHubOAuth())
         }
     }
 
-    private fun onLoginLoading() = with(binding) {
+    private fun onLoading() = with(binding) {
         groupAuthorizationButtons.hideView()
         progressBarLoadingProgress.showView()
     }
 
-    private fun onStopLoginLoading() = with(binding) {
+    private fun onStopLoading() = with(binding) {
         groupAuthorizationButtons.showView()
         progressBarLoadingProgress.hideView()
     }
@@ -53,18 +53,18 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         super.onResume()
         val uri = requireActivity().intent.data
         if (uri != null) {
-            mLogic.onCodeAccquired(uri.getQueryParameter(getString(R.string.homeScreen_queryCodeParameter)))
+            logic.onCodeAccquired(uri.getQueryParameter(getString(R.string.homeScreen_queryCodeParameter)))
         }
     }
 
     override fun setListeners() = with(binding) {
         super.setListeners()
         buttonSkip.setOnClickListener {
-            mLogic.onSkipButton()
+            logic.onSkipButton()
         }
 
         buttonAuthorization.setOnClickListener {
-            mLogic.onAuthButton()
+            logic.onAuthButton()
         }
     }
 }

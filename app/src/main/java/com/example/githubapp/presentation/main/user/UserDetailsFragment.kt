@@ -15,12 +15,12 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUserDetailsBinding
         get() = FragmentUserDetailsBinding::inflate
 
-    private val mArgs by navArgs<UserDetailsFragmentArgs>()
+    private val args by navArgs<UserDetailsFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            loadImage(mArgs.owner.avatarUrl, imageViewUserImage)
+            loadImage(args.owner.avatarUrl, imageViewUserImage)
             textViewUserName.text = getString(R.string.userScreen_name)
             textViewLocation.text = getString(R.string.userScreen_location)
         }

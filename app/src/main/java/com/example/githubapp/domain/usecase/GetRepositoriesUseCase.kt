@@ -5,7 +5,7 @@ import com.example.githubapp.core.Failure
 import com.example.githubapp.core.enums.RepositorySortType
 import com.example.githubapp.core.map
 import com.example.githubapp.core.toRepositories
-import com.example.githubapp.data.home.GithubRepository
+import com.example.githubapp.data.github.GithubRepository
 import com.example.githubapp.domain.base.BaseUseCase
 import com.example.githubapp.domain.entity.Repositories
 

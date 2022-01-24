@@ -4,7 +4,7 @@ import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.core.map
 import com.example.githubapp.core.toUserData
-import com.example.githubapp.data.home.GithubRepository
+import com.example.githubapp.data.github.GithubRepository
 import com.example.githubapp.domain.base.BaseUseCase
 import com.example.githubapp.domain.entity.User
 

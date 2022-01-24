@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface AuthApi {
     @Headers("Accept: application/json")
     @POST("login/oauth/access_token")
-    fun getAccessToken(
+    fun getAccessTokenAsync(
         @Query("client_id") clientId: String,
         @Query("client_secret") clientSecret: String,
         @Query("code") code: String

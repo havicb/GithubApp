@@ -1,4 +1,4 @@
-package com.example.githubapp.data.home
+package com.example.githubapp.data.github
 
 import com.example.githubapp.data.user.UserResponse
 import kotlinx.coroutines.Deferred
@@ -14,7 +14,7 @@ interface GithubApi {
         @Query("sort") repositoryType: String,
         @Query("per_page") perPage: Int,
         @Query("page") page: Int
-    ): Deferred<Response<RepositoryResponse>>
+    ): Deferred<Response<GithubRepositoryResponse>>
 
     @GET("/user")
     fun getLoggedInUserInfo(
