@@ -1,4 +1,4 @@
-package com.example.githubapp
+package com.example.githubapp.data
 
 import android.content.Context
 import android.net.ConnectivityManager

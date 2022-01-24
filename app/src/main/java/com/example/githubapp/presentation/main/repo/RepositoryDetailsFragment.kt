@@ -28,30 +28,31 @@ class RepositoryDetailsFragment : BaseFragment<FragmentRepositoryDetailsBinding>
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setScreen() = with(args.repository) {
-        binding.textViewFullName.text = fullName
-        binding.textViewCreatedAt.text =
+    private fun setScreen() = with(binding) {
+        val repositoryView = args.repository
+        textViewFullName.text = repositoryView.fullName
+        textViewCreatedAt.text =
             getString(
                 R.string.repositoryDetails_createdAt,
-                createdAt.parseIsoToReadableDate()
+                repositoryView.createdAt.parseIsoToReadableDate()
             )
-        binding.textViewLastUpdated.text =
+        textViewLastUpdated.text =
             getString(
                 R.string.repositoryDetails_updatedAt,
-                modifiedAt.parseIsoToReadableDate()
+                repositoryView.modifiedAt.parseIsoToReadableDate()
             )
-        binding.textViewProgrammingLanguage.text =
-            getString(R.string.repositoryDetails_programmingLanguage, language)
-        binding.textViewGithubUrl.apply {
+        textViewProgrammingLanguage.text =
+            getString(R.string.repositoryDetails_programmingLanguage, repositoryView.language)
+        textViewGithubUrl.apply {
             movementMethod = LinkMovementMethod.getInstance()
             text = Html.fromHtml(
                 getString(
                     R.string.repositoryDetails_githubUrl,
-                    removeGitPrefix(gitHubUrl)
+                    removeGitPrefix(repositoryView.gitHubUrl)
                 )
             )
         }
-        loadCircleImage(ownerView.avatarUrl, binding.imageViewAutorImage)
+        loadCircleImage(repositoryView.ownerView.avatarUrl, binding.imageViewAutorImage)
     }
 
     /**

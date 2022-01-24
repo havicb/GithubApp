@@ -29,7 +29,8 @@ class HomeViewModel(
     private val navEvent = SingleLiveEvent<NavigationEvent>()
 
     private val allRepositories = arrayListOf<RepositoryEntity>()
-    private var searchTerm = "a"
+    private var defaultSearchTerm = "a"
+    private var searchTerm = defaultSearchTerm
     private var currentPage = 1
     private var currentSortType: RepositorySortType? = null
 
@@ -99,7 +100,7 @@ class HomeViewModel(
 
     override fun onSearchRepositoriesTextChange(text: String) {
         val formattedText = if (text.trim().isEmpty()) {
-            "a"
+            defaultSearchTerm
         } else text.trim()
         searchTerm = formattedText
     }

@@ -1,6 +1,6 @@
 package com.example.githubapp.data.github
 
-import com.example.githubapp.NetworkHandler
+import com.example.githubapp.data.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.data.BaseRepository

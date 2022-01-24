@@ -32,7 +32,7 @@ data class Params(
 
 /*
  * In real life scenario this should hold every possible token.
- * For this purpose I will use simplified version, just to show you mapping between data and business logic.
+ * For this purpose I will use simplified version, just to show mapping between data and business logic.
  */
 enum class TokenType {
     BEARER;

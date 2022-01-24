@@ -1,9 +1,9 @@
 package com.example.githubapp.core
 
 import com.example.githubapp.data.auth.AccessTokenResponse
-import com.example.githubapp.data.github.Owner
 import com.example.githubapp.data.github.GithubRepositoryDto
 import com.example.githubapp.data.github.GithubRepositoryResponse
+import com.example.githubapp.data.github.Owner
 import com.example.githubapp.data.user.UserResponse
 import com.example.githubapp.domain.entity.OwnerEntity
 import com.example.githubapp.domain.entity.Repositories
@@ -14,7 +14,6 @@ import com.example.githubapp.domain.entity.UserView
 import com.example.githubapp.domain.usecase.TokenType
 import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
-import kotlin.math.log
 
 /**
  * Maps [GithubRepositoryDto] to [RepositoryEntity].
@@ -72,7 +71,8 @@ fun Owner.toOwnerEntity() = OwnerEntity(
  * Maps [GithubRepositoryResponse] to [Repositories]
  * Maps data logic into business object.
  */
-fun GithubRepositoryResponse.toRepositories() = Repositories(githubRepositories.map { it.toRepositoryEntity() })
+fun GithubRepositoryResponse.toRepositories() =
+    Repositories(githubRepositories.map { it.toRepositoryEntity() })
 
 /**
  * Maps [OwnerEntity] to [OwnerView]

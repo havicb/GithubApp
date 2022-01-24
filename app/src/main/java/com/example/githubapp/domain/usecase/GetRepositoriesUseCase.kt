@@ -18,7 +18,7 @@ class GetRepositoriesUseCase(
     override suspend fun run(params: Params): Either<Failure, Repositories> {
         return githubRepository.getRepositories(
             params.searchTerm,
-            RepositorySortType.urlName(params.repositoryType),
+            params.repositoryType?.urlName ?: "forks",
             params.page
         ).map { it.toRepositories() }
     }

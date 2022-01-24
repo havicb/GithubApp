@@ -1,6 +1,6 @@
 package com.example.githubapp.data.di
 
-import com.example.githubapp.NetworkHandlerImpl
+import com.example.githubapp.data.NetworkHandlerImpl
 import com.example.githubapp.data.auth.AuthApi
 import com.example.githubapp.data.github.GithubApi
 import com.example.githubapp.data.github.GithubRepository

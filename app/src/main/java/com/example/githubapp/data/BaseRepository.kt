@@ -1,6 +1,5 @@
 package com.example.githubapp.data
 
-import com.example.githubapp.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import kotlinx.coroutines.Deferred

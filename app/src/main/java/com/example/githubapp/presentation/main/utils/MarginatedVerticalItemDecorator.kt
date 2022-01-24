@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
  * @param verticalMargin -> Dp number for margin between items.
  */
 class MarginatedVerticalItemDecorator(
-    val context: Context,
-    val verticalMargin: Int
+    private val context: Context,
+    private val verticalMargin: Int
 ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         rect: Rect,

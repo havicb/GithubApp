@@ -1,10 +1,10 @@
 package com.example.githubapp.di
 
 import com.example.githubapp.BuildConfig
-import com.example.githubapp.NetworkHandler
-import com.example.githubapp.NetworkHandlerImpl
 import com.example.githubapp.data.DefaultNetworkConfig
 import com.example.githubapp.data.NetworkConfig
+import com.example.githubapp.data.NetworkHandler
+import com.example.githubapp.data.NetworkHandlerImpl
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
