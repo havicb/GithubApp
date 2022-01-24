@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.githubapp.R
-import com.example.githubapp.core.extensions.navController
 import com.example.githubapp.databinding.FragmentAuthBinding
 import com.example.githubapp.presentation.base.BaseFragment
 import com.example.githubapp.presentation.main.utils.gitHubOAuth
@@ -30,8 +29,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             }
         }
 
-        observeShouldNavigate.observe(viewLifecycleOwner) {
-            navController.navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment(it))
+        observeNavigation.observe(viewLifecycleOwner) {
+            handleNavigation(it)
         }
 
         observeShouldCallIntent.observe(viewLifecycleOwner) {

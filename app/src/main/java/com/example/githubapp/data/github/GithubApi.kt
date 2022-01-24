@@ -17,7 +17,7 @@ interface GithubApi {
     ): Deferred<Response<GithubRepositoryResponse>>
 
     @GET("/user")
-    fun getLoggedInUserInfo(
+    fun getLoggedInUserInfoAsync(
         @Header("Authorization") accessToken: String
     ): Deferred<Response<UserResponse>>
 }

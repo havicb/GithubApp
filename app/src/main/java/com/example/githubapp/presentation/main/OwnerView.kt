@@ -5,5 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OwnerView(
-    val avatarUrl: String
+    val id: String,
+    val avatarUrl: String,
+    val username: String
 ) : Parcelable

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
 import com.example.githubapp.presentation.base.view.NavigationEvent
 import com.google.android.material.snackbar.Snackbar
@@ -38,11 +39,19 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        logic.observeNavigationEvent().observe(viewLifecycleOwner) {
-            when (it) {
-                NavigationEvent.Back -> navController.popBackStack()
-                is NavigationEvent.To -> navController.navigate(it.directions)
-            }
+        // todo: Observer not triggered
+        logic.observeNavigationEvent.observe(viewLifecycleOwner) {
+            handleNavigation(it)
+        }
+    }
+
+    /**
+     * Navigate user to particular destination.
+     */
+    protected fun handleNavigation(navigationEvent: NavigationEvent) {
+        when (navigationEvent) {
+            NavigationEvent.Back -> navController.popBackStack()
+            is NavigationEvent.To -> navController.navigate(navigationEvent.directions)
         }
     }
 
@@ -56,7 +65,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     }
 
     protected fun showSnackbar() {
-        Snackbar.make(binding.root, "Some error occured!", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, getString(R.string.baseFragment_error), Snackbar.LENGTH_SHORT)
+            .show()
     }
 
     /**

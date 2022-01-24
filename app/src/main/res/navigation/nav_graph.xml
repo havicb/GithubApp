@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_user_details">
 
         <argument
-            android:name="owner"
+            android:name="user"
             app:argType="com.example.githubapp.presentation.main.OwnerView" />
     </fragment>
     <fragment

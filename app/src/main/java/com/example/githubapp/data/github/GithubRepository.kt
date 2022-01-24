@@ -34,7 +34,6 @@ class GithubRepositoryImpl(
     }
 
     override suspend fun getLoggedInUser(accessToken: String): Either<Failure, UserResponse> {
-        val finalToken = "Bearer $accessToken"
-        return githubApi.getLoggedInUserInfo(finalToken).getResults()
+        return githubApi.getLoggedInUserInfoAsync("Bearer $accessToken").getResults()
     }
 }

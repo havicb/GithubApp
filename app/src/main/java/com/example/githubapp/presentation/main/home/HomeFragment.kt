@@ -37,7 +37,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         args.loggedUser?.let {
             onLoggedUser(it)
         }
-        logic.fetchData()
         setScreen()
     }
 
@@ -52,8 +51,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
 
-        observeRepositoriesFailedLoading.observe(viewLifecycleOwner) {
-            navController.navigate(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
+        observeNavigation.observe(viewLifecycleOwner) {
+            handleNavigation(it)
         }
 
         observeGenericError.observe(viewLifecycleOwner) {
@@ -120,15 +119,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             )
         )
         repositoriesAdapter.setOnRepositoryItemClickListener {
-            navController.navigate(
-                HomeFragmentDirections.actionHomeFragmentToRepositoryDetailsFragment(it)
-            )
+            logic.onRepositoryClick(it)
         }
 
         repositoriesAdapter.setOnAvatarClickListener {
-            navController.navigate(
-                HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment(it)
-            )
+            logic.onAvatarClick(it)
         }
 
         addOnScrollListener(object : RecyclerView.OnScrollListener() {

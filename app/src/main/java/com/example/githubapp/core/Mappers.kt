@@ -14,6 +14,7 @@ import com.example.githubapp.domain.entity.UserView
 import com.example.githubapp.domain.usecase.TokenType
 import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
+import kotlin.math.log
 
 /**
  * Maps [GithubRepositoryDto] to [RepositoryEntity].
@@ -77,7 +78,7 @@ fun GithubRepositoryResponse.toRepositories() = Repositories(githubRepositories.
  * Maps [OwnerEntity] to [OwnerView]
  * Maps bussiness logic into view object.
  */
-fun OwnerEntity.toOwnerView() = OwnerView(avatarUrl)
+fun OwnerEntity.toOwnerView() = OwnerView(id.toString(), avatarUrl, login)
 
 /**
  * Maps [RepositoryEntity] to [RepositoryView]

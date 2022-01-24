@@ -1,4 +1,5 @@
 <resources>
+    <string name="baseFragment_error">"Some error occured!"</string>
     <string name="app_name">Github App</string>
     <string name="homeScreen_searchHint">Find some repositories..</string>
     <string name="homeScreen_dialogTitle">Sort by</string>
@@ -15,6 +16,6 @@
     <string name="errorScreen_buttonCancelText">Cancel</string>
     <string name="authScreen_authButtonText">Use OAuth authorization</string>
     <string name="authScreen_skipButtonText">Skip authorization</string>
-    <string name="userScreen_location">User location: %s</string>
+    <string name="userScreen_id">User id: %s</string>
     <string name="userScreen_name">Username: %s</string>
 </resources>

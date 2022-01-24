@@ -11,7 +11,9 @@ import com.example.githubapp.domain.entity.RepositoryEntity
 import com.example.githubapp.domain.repositories.GetRepositoriesUseCase
 import com.example.githubapp.domain.repositories.Params
 import com.example.githubapp.presentation.base.BaseViewModel
+import com.example.githubapp.presentation.base.view.NavigationEvent
 import com.example.githubapp.presentation.base.view.SingleLiveEvent
+import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,24 +25,40 @@ class HomeViewModel(
     private val repositories = MutableLiveData<List<RepositoryView>>()
     private val shouldShowFilterDialog = SingleLiveEvent<Unit>()
     private val isLoading = MutableLiveData<Boolean>()
-    private val repositoriesFailedLoading = SingleLiveEvent<Unit>()
     private val genericError = SingleLiveEvent<Unit>()
+    private val navEvent = SingleLiveEvent<NavigationEvent>()
 
     private val allRepositories = arrayListOf<RepositoryEntity>()
     private var searchTerm = "a"
     private var currentPage = 1
     private var currentSortType: RepositorySortType? = null
 
+    override val observeNavigation: LiveData<NavigationEvent>
+        get() = navEvent
     override val observeGenericError: LiveData<Unit>
         get() = genericError
-    override val observeRepositoriesFailedLoading: LiveData<Unit>
-        get() = repositoriesFailedLoading
     override val observeLoading: LiveData<Boolean>
         get() = isLoading
     override val observeShouldShowFilterDialog: LiveData<Unit>
         get() = shouldShowFilterDialog
     override val observeRepositories: LiveData<List<RepositoryView>>
         get() = repositories
+
+    init {
+        fetchData()
+    }
+
+    override fun onRepositoryClick(repositoryView: RepositoryView) {
+        navEvent.value = NavigationEvent.To(
+            HomeFragmentDirections.actionHomeFragmentToRepositoryDetailsFragment(repositoryView)
+        )
+    }
+
+    override fun onAvatarClick(ownerView: OwnerView) {
+        navEvent.value = NavigationEvent.To(
+            HomeFragmentDirections.actionHomeFragmentToUserDetailsFragment(ownerView)
+        )
+    }
 
     override fun fetchData() {
         fetchRepositories(searchTerm, currentSortType, currentPage)
@@ -119,7 +137,10 @@ class HomeViewModel(
      */
     private fun handleFailure(failure: Failure) {
         when (failure) {
-            is Failure.NetworkFailure -> repositoriesFailedLoading.value = Unit
+            is Failure.NetworkFailure -> {
+                navEvent.value =
+                    NavigationEvent.To(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
+            }
             is Failure.OtherFailure -> genericError.value = Unit
         }
     }

@@ -5,8 +5,9 @@ import androidx.viewbinding.BuildConfig
 import com.example.githubapp.data.di.dataModule
 import com.example.githubapp.di.networkModule
 import com.example.githubapp.di.useCaseModule
-import com.example.githubapp.presentation.base.view.baseModule
+import com.example.githubapp.presentation.base.baseModule
 import com.example.githubapp.presentation.main.auth.authModule
+import com.example.githubapp.presentation.main.error.errorModule
 import com.example.githubapp.presentation.main.home.homeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -24,7 +25,8 @@ class App : Application() {
                     homeModule,
                     dataModule,
                     useCaseModule,
-                    authModule
+                    authModule,
+                    errorModule
                 )
             )
         }

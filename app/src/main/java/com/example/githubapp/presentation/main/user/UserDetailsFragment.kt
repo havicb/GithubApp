@@ -20,9 +20,9 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            loadImage(args.owner.avatarUrl, imageViewUserImage)
-            textViewUserName.text = getString(R.string.userScreen_name)
-            textViewLocation.text = getString(R.string.userScreen_location)
+            loadImage(args.user.avatarUrl, imageViewUserImage)
+            textViewUserName.text = getString(R.string.userScreen_name, args.user.username)
+            textViewId.text = getString(R.string.userScreen_id, args.user.id)
         }
     }
 }

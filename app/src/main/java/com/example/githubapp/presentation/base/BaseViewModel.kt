@@ -10,7 +10,8 @@ open class BaseViewModel() : ViewModel(), BaseLogic {
 
     private val navigationEvent = SingleLiveEvent<NavigationEvent>()
 
-    override fun observeNavigationEvent(): LiveData<NavigationEvent> = navigationEvent
+    override val observeNavigationEvent: LiveData<NavigationEvent>
+        get() = navigationEvent
 
     protected fun navigate(navEvent: NavigationEvent) {
         navigationEvent.value = navEvent

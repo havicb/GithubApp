@@ -1,11 +1,11 @@
 package com.example.githubapp.presentation.main.auth
 
 import androidx.lifecycle.LiveData
-import com.example.githubapp.domain.entity.UserView
+import com.example.githubapp.presentation.base.view.NavigationEvent
 
 interface AuthLogic {
+    val observeNavigation: LiveData<NavigationEvent>
     val observeIsLoading: LiveData<Boolean>
-    val observeShouldNavigate: LiveData<UserView?>
     val observeShouldCallIntent: LiveData<Unit>
 
     fun onCodeAccquired(code: String?)
