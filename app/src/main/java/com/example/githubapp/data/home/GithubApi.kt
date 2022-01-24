@@ -1,6 +1,7 @@
 package com.example.githubapp.data.home
 
 import com.example.githubapp.data.user.UserResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -8,15 +9,15 @@ import retrofit2.http.Query
 
 interface GithubApi {
     @GET("search/repositories")
-    suspend fun getRepositoriesAsync(
+    fun getRepositoriesAsync(
         @Query("q") searchTerm: String,
         @Query("sort") repositoryType: String,
         @Query("per_page") perPage: Int,
         @Query("page") page: Int
-    ): Response<RepositoryResponse>
+    ): Deferred<Response<RepositoryResponse>>
 
     @GET("/user")
-    suspend fun getLoggedInUserInfo(
+    fun getLoggedInUserInfo(
         @Header("Authorization") accessToken: String
-    ): Response<UserResponse>
+    ): Deferred<Response<UserResponse>>
 }

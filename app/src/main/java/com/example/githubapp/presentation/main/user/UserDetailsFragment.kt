@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.example.githubapp.R
 import com.example.githubapp.core.extensions.loadImage
 import com.example.githubapp.databinding.FragmentUserDetailsBinding
 import com.example.githubapp.presentation.base.BaseFragment
@@ -20,6 +21,8 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             loadImage(mArgs.owner.avatarUrl, imageViewUserImage)
+            textViewUserName.text = getString(R.string.userScreen_name)
+            textViewLocation.text = getString(R.string.userScreen_location)
         }
     }
 }

@@ -1,9 +1,7 @@
 package com.example.githubapp.presentation.main.auth
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
@@ -20,10 +18,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         get() = FragmentAuthBinding::inflate
 
     private val mLogic: AuthLogic by KoinJavaComponent.inject(AuthLogic::class.java)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun onStart() = with(mLogic) {
         super.onStart()

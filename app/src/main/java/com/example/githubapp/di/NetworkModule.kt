@@ -7,6 +7,7 @@ import com.example.githubapp.data.DefaultNetworkConfig
 import com.example.githubapp.data.NetworkConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Dispatcher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -63,6 +64,7 @@ private fun createRetrofit(baseUrl: ApiUrl, gson: Gson, okHttpClient: OkHttpClie
     return Retrofit.Builder()
         .baseUrl(apiBaseUrl)
         .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(okHttpClient)
         .build()
 }

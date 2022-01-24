@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.example.githubapp.ErrorFragment
 import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
 import com.example.githubapp.core.extensions.toast
@@ -34,11 +35,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mArgs.loggedUser?.let {
             toast(it.username)
         }
+        mLogic.fetchData()
         setScreen()
     }
 
     override fun onStart() = with(mLogic) {
         super.onStart()
+
+        // In real case scenario I would create generic extension for this.
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(ErrorFragment.ERROR_FRAGMENT_KEY)
+            ?.observe(viewLifecycleOwner) { shouldFetch ->
+                if (shouldFetch) {
+                    mLogic.fetchData()
+                }
+            }
+
+        observeRepositoriesLoadingFailure().observe(viewLifecycleOwner) {
+            navController.navigate(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
+        }
+
+        observeGenericError().observe(viewLifecycleOwner) {
+            showSnackbar()
+        }
 
         observeIsLoading().observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {

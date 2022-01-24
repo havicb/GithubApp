@@ -6,10 +6,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.ViewFlipper
-import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
@@ -79,4 +76,3 @@ fun View.hideView() {
 fun View.showView() {
     visibility = View.VISIBLE
 }
-

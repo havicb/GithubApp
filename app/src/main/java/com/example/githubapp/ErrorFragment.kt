@@ -1,8 +1,6 @@
 package com.example.githubapp
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.example.githubapp.core.extensions.navController
 import com.example.githubapp.databinding.FragmentErrorBinding
@@ -12,9 +10,13 @@ class ErrorFragment : BaseFragment<FragmentErrorBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentErrorBinding
         get() = FragmentErrorBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.textViewErrorGenericMessage.setOnClickListener {
+    companion object {
+        const val ERROR_FRAGMENT_KEY = "ERROR_FRAGMENT_KEY"
+    }
+
+    override fun setListeners() = with(binding) {
+        retryButton.setOnClickListener {
+            navController.previousBackStackEntry?.savedStateHandle?.set(ERROR_FRAGMENT_KEY, true)
             navController.popBackStack()
         }
     }

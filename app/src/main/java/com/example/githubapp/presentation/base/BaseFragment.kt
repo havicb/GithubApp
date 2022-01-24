@@ -1,15 +1,14 @@
 package com.example.githubapp.presentation.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.githubapp.core.extensions.navController
 import com.example.githubapp.presentation.base.view.NavigationEvent
+import com.google.android.material.snackbar.Snackbar
 import org.koin.java.KoinJavaComponent.inject
 
 abstract class BaseFragment<T : ViewBinding> : Fragment() {
@@ -54,6 +53,10 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
     protected fun hideKeyboard() {
         (requireActivity() as MainActivity).hideKeyboard()
+    }
+
+    protected fun showSnackbar() {
+        Snackbar.make(binding.root, "Some error occured!", Snackbar.LENGTH_SHORT).show()
     }
 
     /**

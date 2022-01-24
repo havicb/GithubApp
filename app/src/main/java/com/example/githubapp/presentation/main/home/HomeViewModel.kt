@@ -13,8 +13,8 @@ import com.example.githubapp.domain.repositories.Params
 import com.example.githubapp.presentation.base.BaseViewModel
 import com.example.githubapp.presentation.base.view.SingleLiveEvent
 import com.example.githubapp.presentation.main.RepositoryView
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class HomeViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase
@@ -23,17 +23,21 @@ class HomeViewModel(
     private val mRepositories = MutableLiveData<List<RepositoryView>>()
     private val mShouldShowFilterDialog = SingleLiveEvent<Unit>()
     private val mIsLoading = MutableLiveData<Boolean>()
+    private val mRepositoryFailedToLoad = SingleLiveEvent<Unit>()
+    private val mGenericError = SingleLiveEvent<Unit>()
 
     private val _mRepositories = arrayListOf<RepositoryEntity>()
     private var mSearchTerm = "a"
     private var mCurrentPage = 1
     private var mCurrentSortType: RepositorySortType? = null
 
+    override fun observeGenericError(): LiveData<Unit> = mGenericError
+    override fun observeRepositoriesLoadingFailure(): LiveData<Unit> = mRepositoryFailedToLoad
     override fun observeIsLoading(): LiveData<Boolean> = mIsLoading
     override fun observeShouldShowFilterDialog(): LiveData<Unit> = mShouldShowFilterDialog
     override fun observeRepositories(): LiveData<List<RepositoryView>> = mRepositories
 
-    init {
+    override fun fetchData() {
         fetchRepositories(mSearchTerm, mCurrentSortType, mCurrentPage)
     }
 
@@ -71,7 +75,7 @@ class HomeViewModel(
     }
 
     override fun onSearchRepositoriesTextChange(text: String) {
-        val formattedText = if(text.trim().isEmpty()) {
+        val formattedText = if (text.trim().isEmpty()) {
             "a"
         } else text.trim()
         mSearchTerm = formattedText
@@ -87,6 +91,7 @@ class HomeViewModel(
     ) {
         viewModelScope.launch {
             mIsLoading.value = true
+            delay(1000)
             getRepositoriesUseCase(Params(searchTerm, repositorySortType, page)).fold(
                 ::handleFailure,
                 ::handleRepositories
@@ -108,7 +113,10 @@ class HomeViewModel(
      * In real life scenario this method would be much more complex.
      */
     private fun handleFailure(failure: Failure) {
-        navigate(HomeFragmentDirections.actionHomeFragmentToErrorFragment())
+        when (failure) {
+            is Failure.NetworkFailure -> mRepositoryFailedToLoad.value = Unit
+            is Failure.OtherFailure -> mGenericError.value = Unit
+        }
     }
 
     /**

@@ -3,17 +3,22 @@ package com.example.githubapp.data
 import com.example.githubapp.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 
 abstract class BaseRepository(private val networkHandler: NetworkHandler) {
 
-    internal inline fun <reified T> Response<T>.getResults(): Either<Failure, T> {
+    internal suspend inline fun <reified T> Deferred<Response<T>>.getResults(): Either<Failure, T> {
+        if(!networkHandler.isNetworkAvailable()) {
+            return Either.Left(Failure.NetworkConnectionFailure("No internet available"))
+        }
         return try {
-            when (isSuccessful) {
-                true -> Either.Right(body() ?: T::class.java.newInstance())
-                false -> handleFailedResponse(code(), message())
+            val response = await()
+            when (response.isSuccessful) {
+                true -> Either.Right(response.body() ?: T::class.java.newInstance())
+                false -> handleFailedResponse(response.code(), response.message())
             }
         } catch (ex: Exception) {
             when (ex) {
