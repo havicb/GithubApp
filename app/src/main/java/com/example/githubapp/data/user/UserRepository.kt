@@ -4,6 +4,8 @@ import com.example.githubapp.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.data.BaseRepository
+import com.example.githubapp.data.auth.AccessTokenResponse
+import com.example.githubapp.data.auth.AuthApi
 
 interface UserRepository {
     suspend fun getAccessToken(

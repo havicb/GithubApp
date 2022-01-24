@@ -4,7 +4,7 @@ import com.example.githubapp.NetworkHandlerImpl
 import com.example.githubapp.data.home.GithubApi
 import com.example.githubapp.data.home.GithubRepository
 import com.example.githubapp.data.home.GithubRepositoryImpl
-import com.example.githubapp.data.user.AuthApi
+import com.example.githubapp.data.auth.AuthApi
 import com.example.githubapp.data.user.UserRepository
 import com.example.githubapp.data.user.UserRepositoryImpl
 import org.koin.core.qualifier.named

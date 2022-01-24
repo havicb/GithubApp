@@ -7,6 +7,7 @@ import com.example.githubapp.core.map
 import com.example.githubapp.core.toUserData
 import com.example.githubapp.data.user.UserRepository
 import com.example.githubapp.domain.base.BaseUseCase
+import com.example.githubapp.domain.entity.TokenData
 
 /**
  * An use-case that exchange oAuth code for access token.
@@ -15,8 +16,8 @@ import com.example.githubapp.domain.base.BaseUseCase
  */
 class GetAccessTokenUseCase(
     private val userRepository: UserRepository
-) : BaseUseCase<UserData, Params>() {
-    override suspend fun run(params: Params): Either<Failure, UserData> {
+) : BaseUseCase<TokenData, Params>() {
+    override suspend fun run(params: Params): Either<Failure, TokenData> {
         return userRepository.getAccessToken(
             BuildConfig.CLIENT_ID,
             BuildConfig.CLIENT_SECRETS,
@@ -27,11 +28,6 @@ class GetAccessTokenUseCase(
 
 data class Params(
     val code: String
-)
-
-data class UserData(
-    val accessToken: String,
-    val tokenType: TokenType?
 )
 
 /*

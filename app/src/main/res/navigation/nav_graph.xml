@@ -19,6 +19,11 @@
         <action
             android:id="@+id/action_homeFragment_to_errorFragment"
             app:destination="@id/errorFragment" />
+        <argument
+            android:name="loggedUser"
+            app:argType="com.example.githubapp.domain.entity.UserView"
+            app:nullable="true" />
+
     </fragment>
     <fragment
         android:id="@+id/repositoryDetailsFragment"

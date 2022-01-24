@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.githubapp.BuildConfig
+import com.example.githubapp.core.extensions.navController
+import com.example.githubapp.core.toView
 import com.example.githubapp.databinding.FragmentAuthBinding
 import com.example.githubapp.presentation.base.BaseFragment
 import org.koin.java.KoinJavaComponent
@@ -24,6 +26,10 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     override fun onStart() = with(mLogic) {
         super.onStart()
+
+        observeNavigation().observe(viewLifecycleOwner) {
+            navController.navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment(it?.toView()))
+        }
 
         observeCallIntent().observe(viewLifecycleOwner) {
             val intent = Intent(
@@ -43,6 +49,17 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         val uri = requireActivity().intent.data
         if (uri != null) {
             mLogic.onCodeAccquired(uri.getQueryParameter("code"))
+        }
+    }
+
+    override fun setListeners() = with(binding) {
+        super.setListeners()
+        buttonSkip.setOnClickListener {
+            mLogic.onSkipButton()
+        }
+
+        buttonAuthorization.setOnClickListener {
+           mLogic.onAuthButton()
         }
     }
 }

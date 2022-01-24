@@ -4,6 +4,7 @@ import com.example.githubapp.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.data.BaseRepository
+import com.example.githubapp.data.user.UserResponse
 
 interface GithubRepository {
     suspend fun getRepositories(
@@ -11,6 +12,8 @@ interface GithubRepository {
         repositoryType: String,
         page: Int
     ): Either<Failure, RepositoryResponse>
+
+    suspend fun getLoggedInUser(accessToken: String): Either<Failure, UserResponse>
 }
 
 class GithubRepositoryImpl(
@@ -28,5 +31,10 @@ class GithubRepositoryImpl(
 
         return githubApi.getRepositoriesAsync(searchTerm, repositoryType, perPage, page)
             .getResults()
+    }
+
+    override suspend fun getLoggedInUser(accessToken: String): Either<Failure, UserResponse> {
+        val finalToken = "Bearer $accessToken"
+        return githubApi.getLoggedInUserInfo(finalToken).getResults()
     }
 }

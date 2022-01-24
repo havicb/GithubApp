@@ -1,4 +1,4 @@
-package com.example.githubapp.data.user
+package com.example.githubapp.data.auth
 
 import retrofit2.Response
 import retrofit2.http.Headers

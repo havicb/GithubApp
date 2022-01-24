@@ -1,14 +1,17 @@
 package com.example.githubapp.core
 
+import com.example.githubapp.data.auth.AccessTokenResponse
 import com.example.githubapp.data.home.Owner
 import com.example.githubapp.data.home.RepositoryDto
 import com.example.githubapp.data.home.RepositoryResponse
-import com.example.githubapp.data.user.AccessTokenResponse
+import com.example.githubapp.data.user.UserResponse
 import com.example.githubapp.domain.entity.OwnerEntity
 import com.example.githubapp.domain.entity.Repositories
 import com.example.githubapp.domain.entity.RepositoryEntity
+import com.example.githubapp.domain.entity.TokenData
+import com.example.githubapp.domain.entity.User
+import com.example.githubapp.domain.entity.UserView
 import com.example.githubapp.domain.usecase.TokenType
-import com.example.githubapp.domain.usecase.UserData
 import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
 
@@ -99,6 +102,17 @@ fun RepositoryEntity.toRepositoryView() = RepositoryView(
 fun List<RepositoryEntity>.toView() = map { it.toRepositoryView() }
 
 /**
- * Convert [AccessTokenResponse] to [UserData]
+ * Convert [AccessTokenResponse] to [TokenData]
  */
-fun AccessTokenResponse.toUserData() = UserData(this.accessToken, TokenType.from(accessToken))
+fun AccessTokenResponse.toUserData() = TokenData(this.accessToken, TokenType.from(accessToken))
+
+/**
+ * Convert [UserResponse] to [User]
+ */
+fun UserResponse.toUserData() = User(id, username, avatarUrl, location)
+
+/**
+ * Convert [User] to [UserView]
+ * Maps business into view logic.
+ */
+fun User.toView() = UserView(id.toString(), username, avatarUrl, location)

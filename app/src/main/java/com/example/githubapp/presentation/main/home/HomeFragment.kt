@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
+import com.example.githubapp.core.extensions.toast
 import com.example.githubapp.databinding.FragmentHomeBinding
 import com.example.githubapp.databinding.SortDialogBinding
 import com.example.githubapp.presentation.base.BaseFragment
@@ -24,10 +26,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val mLogic: HomeLogic by inject(HomeLogic::class.java)
     private val mAdapter: HomeRepositoriesAdapter by inject(HomeRepositoriesAdapter::class.java)
+    private val mArgs: HomeFragmentArgs by navArgs()
     private lateinit var mDialog: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mArgs.loggedUser?.let {
+            toast(it.username)
+        }
         setScreen()
     }
 

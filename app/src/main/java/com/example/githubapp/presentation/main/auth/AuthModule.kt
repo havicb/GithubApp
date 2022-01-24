@@ -4,5 +4,5 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val authModule = module {
-    single { AuthViewModel(get()) } bind AuthLogic::class
+    single { AuthViewModel(get(), get()) } bind AuthLogic::class
 }
