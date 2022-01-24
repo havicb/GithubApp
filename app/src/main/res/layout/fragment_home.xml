@@ -6,6 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.home.HomeFragment">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_userCredentials"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"
+        android:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="?primaryTextColor"
+                app:layout_constraintEnd_toStartOf="@+id/textView_location"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="12dp"/>
+
+            <TextView
+                android:id="@+id/textView_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="?primaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView_username"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="12dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <ImageView
         android:id="@+id/imageView_searchIcon"
         android:layout_width="wrap_content"
@@ -15,7 +59,7 @@
         android:src="@drawable/search_icon"
         android:foreground="?selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/card_userCredentials"/>
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editText_searchRepositories"
@@ -31,7 +75,7 @@
         android:textColor="?attr/primaryTextColor"
         app:layout_constraintEnd_toStartOf="@id/imageView_filterIcon"
         app:layout_constraintStart_toEndOf="@id/imageView_searchIcon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/card_userCredentials" />
 
     <ImageView
         android:id="@+id/imageView_filterIcon"
@@ -42,7 +86,7 @@
         android:foreground="?selectableItemBackground"
         android:src="@drawable/filter_list_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_userCredentials"
         app:layout_constraintBottom_toTopOf="@id/viewFlipper"
         android:layout_marginBottom="4dp"/>
 

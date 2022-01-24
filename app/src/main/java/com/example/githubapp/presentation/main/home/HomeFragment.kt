@@ -17,6 +17,7 @@ import com.example.githubapp.databinding.SortDialogBinding
 import com.example.githubapp.presentation.base.BaseFragment
 import com.example.githubapp.presentation.main.utils.MarginatedVerticalItemDecorator
 import com.example.githubapp.presentation.main.utils.onActionSearch
+import com.example.githubapp.presentation.main.utils.showView
 import com.example.githubapp.presentation.main.utils.showViewByIndex
 import org.koin.java.KoinJavaComponent.inject
 
@@ -33,7 +34,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mArgs.loggedUser?.let {
-            toast(it.username)
+            binding.cardUserCredentials.showView()
+            binding.textViewUsername.text = it.username
+            binding.textViewLocation.text = it.location
         }
         mLogic.fetchData()
         setScreen()

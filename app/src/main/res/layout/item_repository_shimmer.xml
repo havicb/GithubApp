@@ -6,8 +6,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/mercury"
         app:cardCornerRadius="32dp"
@@ -36,7 +36,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/cardView1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardView1"
-        app:layout_constraintTop_toTopOf="@+id/cardView1" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view2"
