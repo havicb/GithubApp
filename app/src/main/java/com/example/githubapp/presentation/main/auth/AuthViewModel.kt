@@ -72,6 +72,7 @@ class AuthViewModel(
     }
 
     private fun handleFailure(failure: Failure) {
+        mHasUserLoggedIn = false
         // todo: Handle failure
     }
 }
