@@ -1,10 +1,11 @@
 package com.example.githubapp.presentation.main.auth
 
 import androidx.lifecycle.LiveData
-import com.example.githubapp.domain.entity.User
+import com.example.githubapp.domain.entity.UserView
 
 interface AuthLogic {
-    fun observeNavigation(): LiveData<User?>
+    fun observeLoginLoading(): LiveData<Boolean>
+    fun observeNavigation(): LiveData<UserView?>
     fun observeCallIntent(): LiveData<Unit>
     fun onCodeAccquired(code: String?)
     fun onSkipButton()

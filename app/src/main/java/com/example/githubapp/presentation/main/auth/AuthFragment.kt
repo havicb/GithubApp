@@ -1,16 +1,17 @@
 package com.example.githubapp.presentation.main.auth
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.githubapp.BuildConfig
+import com.example.githubapp.R
 import com.example.githubapp.core.extensions.navController
-import com.example.githubapp.core.toView
 import com.example.githubapp.databinding.FragmentAuthBinding
 import com.example.githubapp.presentation.base.BaseFragment
+import com.example.githubapp.presentation.main.utils.gitHubOAuth
+import com.example.githubapp.presentation.main.utils.hideView
+import com.example.githubapp.presentation.main.utils.showView
 import org.koin.java.KoinJavaComponent
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
@@ -27,28 +28,38 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override fun onStart() = with(mLogic) {
         super.onStart()
 
+        observeLoginLoading().observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                onLoginLoading()
+            } else {
+                onStopLoginLoading()
+            }
+        }
+
         observeNavigation().observe(viewLifecycleOwner) {
-            navController.navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment(it?.toView()))
+            navController.navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment(it))
         }
 
         observeCallIntent().observe(viewLifecycleOwner) {
-            val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(
-                    "https://github.com/login/oauth/authorize".plus("?client_id=${BuildConfig.CLIENT_ID}")
-                        .plus("&scope=repo&redirect_uri=${BuildConfig.REDIRECT_CALLBACK}")
-                )
-            )
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
+            startActivity(Intent().gitHubOAuth())
         }
+    }
+
+    private fun onLoginLoading() = with(binding) {
+        groupAuthorizationButtons.hideView()
+        progressBarLoadingProgress.showView()
+    }
+
+    private fun onStopLoginLoading() = with(binding) {
+        groupAuthorizationButtons.showView()
+        progressBarLoadingProgress.hideView()
     }
 
     override fun onResume() {
         super.onResume()
         val uri = requireActivity().intent.data
         if (uri != null) {
-            mLogic.onCodeAccquired(uri.getQueryParameter("code"))
+            mLogic.onCodeAccquired(uri.getQueryParameter(getString(R.string.homeScreen_queryCodeParameter)))
         }
     }
 
@@ -59,7 +70,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         }
 
         buttonAuthorization.setOnClickListener {
-           mLogic.onAuthButton()
+            mLogic.onAuthButton()
         }
     }
 }

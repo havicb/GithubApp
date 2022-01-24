@@ -3,6 +3,7 @@ package com.example.githubapp.presentation.main.utils
 import android.content.Context
 import android.os.Build
 import android.util.TypedValue
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -50,6 +51,9 @@ fun EditText.onActionSearch(block: () -> Boolean) {
     }
 }
 
+/**
+ * Converts iso 8601 string date to date format: 2019-09-03 19:09
+ */
 fun String.parseIsoToReadableDate(): String {
     val date = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         Date.from(Instant.parse(this))
@@ -61,3 +65,18 @@ fun String.parseIsoToReadableDate(): String {
 
     return dateFormat.format(date)
 }
+
+/**
+ * Hide view from screen.
+ */
+fun View.hideView() {
+    visibility = View.GONE
+}
+
+/**
+ * Show view on screen.
+ */
+fun View.showView() {
+    visibility = View.VISIBLE
+}
+

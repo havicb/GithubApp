@@ -1,12 +1,13 @@
 package com.example.githubapp.presentation.main.auth
 
-import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.githubapp.core.Failure
 import com.example.githubapp.core.toView
 import com.example.githubapp.domain.entity.TokenData
 import com.example.githubapp.domain.entity.User
+import com.example.githubapp.domain.entity.UserView
 import com.example.githubapp.domain.usecase.GetAccessTokenUseCase
 import com.example.githubapp.domain.usecase.GetLoggedInUserUseCase
 import com.example.githubapp.domain.usecase.Params
@@ -21,9 +22,14 @@ class AuthViewModel(
 ) : BaseViewModel(), AuthLogic {
 
     private val mCallIntent = SingleLiveEvent<Unit>()
-    private val mUser = SingleLiveEvent<User?>()
+    private val mUser = SingleLiveEvent<UserView?>()
+    private val mLoginLoading = MutableLiveData<Boolean>()
 
-    override fun observeNavigation(): LiveData<User?> = mUser
+    private var mHasUserLoggedIn = false
+    private var _user: User? = null
+
+    override fun observeLoginLoading(): LiveData<Boolean> = mLoginLoading
+    override fun observeNavigation(): LiveData<UserView?> = mUser
     override fun observeCallIntent(): LiveData<Unit> = mCallIntent
 
     override fun onSkipButton() {
@@ -31,12 +37,18 @@ class AuthViewModel(
     }
 
     override fun onAuthButton() {
-        mCallIntent.value = Unit
+        if (mHasUserLoggedIn) {
+            mUser.value = _user?.toView()
+        } else {
+            mCallIntent.value = Unit
+        }
     }
 
     override fun onCodeAccquired(code: String?) {
         code?.let {
-            fetchAccessToken(it)
+            if (!mHasUserLoggedIn) {
+                fetchAccessToken(it)
+            }
         }
     }
 
@@ -45,14 +57,18 @@ class AuthViewModel(
     }
 
     private fun handleAccessToken(tokenData: TokenData) = viewModelScope.launch {
+        mLoginLoading.value = true
         getLoggedInUserUseCase(TokenParam(tokenData.accessToken)).fold(
             ::handleFailure,
             ::handleUser
         )
+        mLoginLoading.value = false
     }
 
     private fun handleUser(user: User) {
-        mUser.value = user
+        mHasUserLoggedIn = true
+        _user = user
+        mUser.value = user.toView()
     }
 
     private fun handleFailure(failure: Failure) {

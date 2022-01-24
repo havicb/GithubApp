@@ -5,6 +5,7 @@
     <string name="homeScreen_dialogSortByForks">Forks</string>
     <string name="homeScreen_dialogSortByUpdated">Updated</string>
     <string name="homeScreen_dialogSortByStars">Stars</string>
+    <string name="homeScreen_queryCodeParameter">code</string>
     <string name="repositoryDetails_createdAt">Created at: %s</string>
     <string name="repositoryDetails_updatedAt">Modified at: %s</string>
     <string name="repositoryDetails_programmingLanguage">Used language: %s</string>
