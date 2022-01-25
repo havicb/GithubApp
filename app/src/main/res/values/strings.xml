@@ -18,4 +18,6 @@
     <string name="authScreen_skipButtonText">Skip authorization</string>
     <string name="userScreen_id">User id: %s</string>
     <string name="userScreen_name">Username: %s</string>
+    <string name="userDetails_githubUrl">You can visit user at:&lt;a href="https://%s">Github&lt;/a></string>
+
 </resources>

@@ -2,10 +2,14 @@ package com.example.githubapp.presentation.main.utils
 
 import android.content.Context
 import android.os.Build
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.method.MovementMethod
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.ViewFlipper
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -75,4 +79,9 @@ fun View.hideView() {
  */
 fun View.showView() {
     visibility = View.VISIBLE
+}
+
+fun TextView.setClickableLink(message: String) {
+    movementMethod = LinkMovementMethod.getInstance()
+    text = Html.fromHtml(message)
 }

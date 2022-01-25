@@ -12,5 +12,6 @@ data class OwnerEntity(
     val starredUrl: String,
     val subscriptionsUrl: String,
     val type: String,
-    val url: String
+    val url: String,
+    val userUrl: String
 )

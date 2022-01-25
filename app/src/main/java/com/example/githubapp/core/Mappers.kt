@@ -15,6 +15,8 @@ import com.example.githubapp.domain.usecase.TokenType
 import com.example.githubapp.presentation.main.OwnerView
 import com.example.githubapp.presentation.main.RepositoryView
 
+private const val UNKNOWN_PROPERTY_TEXT = "Unknown"
+
 /**
  * Maps [GithubRepositoryDto] to [RepositoryEntity].
  */
@@ -25,25 +27,25 @@ fun GithubRepositoryDto.toRepositoryEntity() =
         commits_url,
         created_at,
         default_branch,
-        description ?: "Unknown",
+        description ?: UNKNOWN_PROPERTY_TEXT,
         disabled,
         downloads_url,
         forks_count,
         full_name,
         git_url,
         has_downloads,
-        homepage ?: "Unknown",
+        homepage ?: UNKNOWN_PROPERTY_TEXT,
         id,
         name,
         owner.toOwnerEntity(),
-        pushed_at ?: "Unknown",
+        pushed_at ?: UNKNOWN_PROPERTY_TEXT,
         releases_url,
         score,
         size,
         updated_at,
         url,
         visibility,
-        language ?: "Unknown",
+        language ?: UNKNOWN_PROPERTY_TEXT,
         watchers,
         watchers_count,
         open_issues_count
@@ -64,7 +66,8 @@ fun Owner.toOwnerEntity() = OwnerEntity(
     starred_url,
     subscriptions_url,
     type,
-    url
+    url,
+    html_url
 )
 
 /**
@@ -78,7 +81,7 @@ fun GithubRepositoryResponse.toRepositories() =
  * Maps [OwnerEntity] to [OwnerView]
  * Maps bussiness logic into view object.
  */
-fun OwnerEntity.toOwnerView() = OwnerView(id.toString(), avatarUrl, login)
+fun OwnerEntity.toOwnerView() = OwnerView(id.toString(), avatarUrl, login, userUrl)
 
 /**
  * Maps [RepositoryEntity] to [RepositoryView]

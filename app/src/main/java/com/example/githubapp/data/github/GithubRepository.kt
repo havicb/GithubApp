@@ -1,9 +1,9 @@
 package com.example.githubapp.data.github
 
-import com.example.githubapp.data.NetworkHandler
 import com.example.githubapp.core.Either
 import com.example.githubapp.core.Failure
 import com.example.githubapp.data.BaseRepository
+import com.example.githubapp.data.NetworkHandler
 import com.example.githubapp.data.user.UserResponse
 
 interface GithubRepository {

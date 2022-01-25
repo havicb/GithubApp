@@ -9,6 +9,7 @@ import com.example.githubapp.R
 import com.example.githubapp.core.extensions.loadImage
 import com.example.githubapp.databinding.FragmentUserDetailsBinding
 import com.example.githubapp.presentation.base.BaseFragment
+import com.example.githubapp.presentation.main.utils.setClickableLink
 
 class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
 
@@ -23,6 +24,16 @@ class UserDetailsFragment : BaseFragment<FragmentUserDetailsBinding>() {
             loadImage(args.user.avatarUrl, imageViewUserImage)
             textViewUserName.text = getString(R.string.userScreen_name, args.user.username)
             textViewId.text = getString(R.string.userScreen_id, args.user.id)
+            textViewUrl.setClickableLink(
+                getString(
+                    R.string.userDetails_githubUrl,
+                    removePrefix(args.user.url)
+                )
+            )
         }
+    }
+
+    private fun removePrefix(githubUrl: String): String {
+        return githubUrl.drop(6)
     }
 }
