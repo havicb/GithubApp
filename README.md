@@ -24,6 +24,7 @@ Simple github app that demonstrates my skills as an android developer.
 # Login screen
  - User is able to login to his account using GitHub OAuth
  - User is able to proceed further without login 
+ - User is able to see his informations given from Github API
 
 # Search screen
  - User is able to see all github repositories
