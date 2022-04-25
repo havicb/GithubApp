@@ -3,6 +3,7 @@ Simple github app that demonstrates my skills as an android developer.
 
 # Dependencies
  - Latest Android Studio
+ - Secrets file
  
 # Getting started
 - Kotlin styleguides
