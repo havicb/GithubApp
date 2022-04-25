@@ -10,6 +10,7 @@ buildscript {
         constraintLayout = "2.1.3"
         testEspresso = "3.4.0"
         jUnit = "1.1.3"
+        ktxRuntime = "2.7.1"
 
         // data
         retrofitVersion = "2.9.0"

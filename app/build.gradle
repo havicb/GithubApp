@@ -6,6 +6,10 @@ plugins {
 
 }
 
+def apikeyPropertiesFile = rootProject.file("secrets/secrets.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdk 31
 
@@ -20,9 +24,9 @@ android {
 
         buildConfigField 'String', 'API_BASE_URL', '"https://api.github.com/"'
         buildConfigField 'String', 'GITHUB_AUTH_URL', '"https://github.com/"'
-        buildConfigField 'String', 'CLIENT_ID', '"c0f3ecdcca91f832dcb4"'
-        buildConfigField 'String', 'CLIENT_SECRETS', '"7c425775f638b6c7968db274270a80943c6cf2db"'
         buildConfigField 'String', 'REDIRECT_CALLBACK', '"githubapp://callback"'
+        buildConfigField 'String', 'CLIENT_ID', apikeyProperties['CLIENT_ID']
+        buildConfigField 'String', 'CLIENT_SECRETS', apikeyProperties['CLIENT_SECRETS']
     }
 
     buildFeatures {
@@ -45,13 +49,15 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.core:core-ktx:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appCompat"
     implementation "com.google.android.material:material:$androidMaterial"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.work:work-runtime-ktx:$ktxRuntime"
     androidTestImplementation "androidx.test.ext:junit:$jUnit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$testEspresso"
+
 
     // data
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
